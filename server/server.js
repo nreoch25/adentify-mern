@@ -31,6 +31,46 @@ import { match, RouterContext } from "react-router";
 import routes from "../client/routes";
 import serverConfig from "./config";
 
+// Apply body Parser and server public assets and routes
+app.use(compression());
+app.use(bodyParser.json({ limit: "20mb" }));
+app.use(bodyParser.urlencoded({ limit: "20mb", extended: false }));
+app.use(express.static(path.resolve(__dirname, "../dist")));
+
+// Render Initial HTML
+const renderFullPage = (html, initialState) => {
+  return `
+    <!DOCTYPE HTML>
+    <html>
+      <head>
+      </head>
+      <body>
+        <div id="root">${html}</div>
+        <script> window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}; </script>
+        <script src="/app.js"></script>
+      </body>
+    </html>
+  `;
+};
+
+// Server side Rendering based on routes matched by react-router
+app.use((req, res, next) => {
+  match({ routes, location: req.url }, (err, redirectLocation, renderProps) => {
+    if(err) {
+      return res.status(500);
+    }
+    if(redirectLocation) {
+      return res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+    }
+    if(!renderProps) {
+      return next();
+    }
+    const store = configureStore();
+
+    //TODO implement fetchComponentData for Server side rendering
+  })
+});
+
 // Express setup
 app.use((req, res, next) => {
   res.send({"hello": "world"});
