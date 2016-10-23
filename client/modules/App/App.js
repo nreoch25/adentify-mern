@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { fetchData } from "../../actions/AppActions";
 
 export default class App extends Component {
   render() {
@@ -9,3 +10,5 @@ export default class App extends Component {
     );
   }
 }
+
+App.need = [() => { return fetchData(); }];

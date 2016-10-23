@@ -29,6 +29,7 @@ import { match, RouterContext } from "react-router";
 
 // Import required modules
 import routes from "../client/routes";
+import { fetchComponentData } from "./util/fetchData";
 import serverConfig from "./config";
 
 // Apply body Parser and server public assets and routes
@@ -68,13 +69,21 @@ app.use((req, res, next) => {
     const store = configureStore();
 
     //TODO implement fetchComponentData for Server side rendering
-  })
+    return fetchComponentData(store, renderProps.components, renderProps.params)
+      .then(() => {
+        const initialView = renderToString(
+          <Provider store={store}>
+            <RouterContext {...renderProps} />
+          </Provider>
+        );
+        const finalState = store.getState();
+        res.set("Content-Type", "text/html").status(200).end(renderFullPage(initialView, finalState));
+      })
+      .catch((error) => {
+        next(error);
+      });
+  });
 });
-
-// Express setup
-app.use((req, res, next) => {
-  res.send({"hello": "world"});
-})
 
 app.listen(serverConfig.port, (error) => {
   if(!error) {
