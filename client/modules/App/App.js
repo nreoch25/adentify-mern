@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { fetchData } from "../../actions/AppActions";
+import { fetchPosts, fetchPhotos } from "../../actions/AppActions";
 
-export default class App extends Component {
+class App extends Component {
   render() {
     return (
       <div>
@@ -11,4 +11,9 @@ export default class App extends Component {
   }
 }
 
-App.need = [() => { return fetchData(); }];
+App.need = [
+  () => { return fetchPosts(); },
+  () => { return fetchPhotos(); }
+];
+
+export default App;
