@@ -28,7 +28,7 @@ import { match, RouterContext } from "react-router";
 
 // Import required modules
 import routes from "../client/routes";
-import { fetchComponentData } from "./util/fetchData";
+import { fetchComponentData } from "./utils/fetchData";
 import serverConfig from "./config";
 
 // Apply body Parser and server public assets and routes

@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, IndexRoute } from "react-router";
-import App from "./modules/App/App";
+import App from "./components/App";
 
 // require.ensure polyfill for node
 if (typeof require.ensure !== 'function') {
@@ -14,7 +14,7 @@ export default (
     <IndexRoute
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
-          cb(null, require("./modules/Sections/Index").default);
+          cb(null, require("./components/Index").default);
         });
       }}
     />

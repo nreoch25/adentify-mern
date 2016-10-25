@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { fetchPosts, fetchPhotos } from "../../actions/AppActions";
+import { fetchPosts, fetchPhotos } from "../actions/AppActions";
 
 class App extends Component {
   render() {

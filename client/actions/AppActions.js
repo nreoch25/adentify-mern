@@ -1,4 +1,4 @@
-import callApi from "../util/apiCaller";
+import callApi from "../utils/apiCaller";
 
 // Export Constants
 export const ADD_POSTS = "ADD_POSTS";
