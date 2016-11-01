@@ -1,4 +1,6 @@
 var webpack = require("webpack");
+var cssnext = require("postcss-cssnext");
+var cssimport = require("postcss-import");
 
 module.exports = {
   entry: {
@@ -23,7 +25,7 @@ module.exports = {
     publicPath: "http://0.0.0.0:8000/"
   },
   resolve: {
-    extensions: ["", ".js", ".jsx"],
+    extensions: ["", ".js", ".jsx", ".css"],
     modules: [
       "client",
       "node_modules"
@@ -31,6 +33,15 @@ module.exports = {
   },
   module: {
     loaders: [
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        loader: "style-loader!css-loader!postcss-loader",
+      }, {
+        test: /\.css$/,
+        include: /node_modules/,
+        loaders: ["style-loader", "css-loader"],
+      },
       {
         test: /\.jsx*$/,
         exclude: /node_modules/,
@@ -55,5 +66,13 @@ module.exports = {
         "NODE_ENV": JSON.stringify("development")
       }
     })
+  ],
+
+  postcss: () => [
+    cssimport(),
+    cssnext({
+      browsers: [ "last 2 versions", "IE > 10" ]
+    })
   ]
+
 };

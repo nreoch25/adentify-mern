@@ -5,7 +5,9 @@ class App extends Component {
   render() {
     return (
       <div>
+        <header>Site Header</header>
         {this.props.children}
+        <footer>Site Footer</footer>
       </div>
     );
   }

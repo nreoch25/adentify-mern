@@ -5,6 +5,9 @@ import { Router, browserHistory } from "react-router";
 // Import routes
 import routes from "./routes";
 
+// Base stylesheet
+require("./styles/main.css");
+
 export default function App(props) {
   return (
     <Provider store={props.store}>
