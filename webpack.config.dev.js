@@ -1,13 +1,20 @@
 var webpack = require("webpack");
+var vendors = "./vendors";
 
 module.exports = {
-  devtool: "cheap-module-eval-source-map",
   entry: {
     app: [
       "webpack-hot-middleware/client",
       "webpack/hot/only-dev-server",
       "react-hot-loader/patch",
       "./client/index.js"
+    ],
+    vendor: [
+      "react",
+      "react-dom",
+      "react-redux",
+      "react-router",
+      "redux"
     ]
   },
   output: {
@@ -37,6 +44,11 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: "vendor",
+      minChunks: Infinity,
+      filename: "vendor.js"
+    }),
     new webpack.DefinePlugin({
       "process.env": {
         CLIENT: JSON.stringify(true),
