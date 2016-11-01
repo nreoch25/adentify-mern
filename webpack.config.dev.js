@@ -1,6 +1,5 @@
 var webpack = require("webpack");
 var cssnext = require("postcss-cssnext");
-var cssimport = require("postcss-import");
 
 module.exports = {
   entry: {
@@ -37,10 +36,6 @@ module.exports = {
         test: /\.css$/,
         exclude: /node_modules/,
         loader: "style-loader!css-loader!postcss-loader",
-      }, {
-        test: /\.css$/,
-        include: /node_modules/,
-        loaders: ["style-loader", "css-loader"],
       },
       {
         test: /\.jsx*$/,
@@ -69,7 +64,6 @@ module.exports = {
   ],
 
   postcss: () => [
-    cssimport(),
     cssnext({
       browsers: [ "last 2 versions", "IE > 10" ]
     })
