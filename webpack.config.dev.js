@@ -1,5 +1,4 @@
 var webpack = require("webpack");
-var vendors = "./vendors";
 
 module.exports = {
   entry: {
@@ -14,7 +13,8 @@ module.exports = {
       "react-dom",
       "react-redux",
       "react-router",
-      "redux"
+      "redux",
+      "redux-thunk"
     ]
   },
   output: {
