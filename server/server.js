@@ -13,7 +13,7 @@ import webpackHotMiddleware from "webpack-hot-middleware";
 const app = new express();
 
 // Run Webpack dev server in development mode
-if(process.env.NODE_ENV = "development") {
+if(process.env.NODE_ENV === "development") {
   const compiler = webpack(config);
   app.use(webpackDevMiddleware(compiler, { noInfo: false, colors: true, publicPath: config.output.publicPath }));
   app.use(webpackHotMiddleware(compiler));

@@ -4,7 +4,8 @@
   "description": "Adentify using MERN stack",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env BABEL_DISABLE_CACHE=1 NODE_ENV=development nodemon index.js"
+    "start": "cross-env BABEL_DISABLE_CACHE=1 NODE_ENV=development nodemon index.js",
+    "lint": "eslint client server || true"
   },
   "author": "Nigel Reoch",
   "license": "ISC",
@@ -21,6 +22,7 @@
     "redux-thunk": "^2.1.0"
   },
   "devDependencies": {
+    "babel-eslint": "^7.1.0",
     "babel-loader": "^6.2.5",
     "babel-plugin-webpack-loaders": "^0.8.0",
     "babel-polyfill": "^6.16.0",
@@ -29,6 +31,8 @@
     "babel-preset-stage-0": "^6.16.0",
     "babel-register": "^6.16.3",
     "css-loader": "^0.25.0",
+    "eslint": "^3.9.1",
+    "eslint-plugin-react": "^6.6.0",
     "json-loader": "^0.5.4",
     "nodemon": "^1.11.0",
     "postcss-cssnext": "^2.8.0",

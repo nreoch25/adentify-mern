@@ -1,4 +1,4 @@
-import { sequence } from './promiseUtils';
+import { sequence } from "./promiseUtils";
 
 export function fetchComponentData(store, components, params) {
   const needs = components.reduce((prev, current) => {

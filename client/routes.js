@@ -3,7 +3,7 @@ import { Route, IndexRoute } from "react-router";
 import App from "./components/App";
 
 // require.ensure polyfill for node
-if (typeof require.ensure !== 'function') {
+if (typeof require.ensure !== "function") {
   require.ensure = function requireModule(deps, callback) {
     callback(require);
   };
