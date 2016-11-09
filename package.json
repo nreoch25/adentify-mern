@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "cross-env BABEL_DISABLE_CACHE=1 NODE_ENV=development nodemon index.js",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
+    "clean": "rimraf dist",
     "lint": "eslint client server || true",
     "test": "mocha client/utils/testSetup.js \"client/**/*.test.js\" || true"
   },
@@ -31,11 +33,13 @@
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
     "babel-register": "^6.16.3",
+    "chunk-manifest-webpack-plugin": "^0.1.0",
     "css-loader": "^0.25.0",
     "enzyme": "^2.5.1",
     "eslint": "^3.9.1",
     "eslint-plugin-react": "^6.6.0",
     "expect": "^1.20.2",
+    "extract-text-webpack-plugin": "^1.0.1",
     "jsdom": "^9.8.3",
     "json-loader": "^0.5.4",
     "mocha": "^3.1.2",
@@ -45,9 +49,11 @@
     "react-addons-test-utils": "^15.3.2",
     "react-hot-loader": "^3.0.0-beta.6",
     "redux-devtools": "^3.3.1",
+    "rimraf": "^2.5.4",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.2",
     "webpack-dev-middleware": "^1.8.4",
-    "webpack-hot-middleware": "^2.13.0"
+    "webpack-hot-middleware": "^2.13.0",
+    "webpack-manifest-plugin": "^1.1.0"
   }
 }
