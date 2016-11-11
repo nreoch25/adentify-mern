@@ -6,6 +6,7 @@
   "scripts": {
     "start": "cross-env BABEL_DISABLE_CACHE=1 NODE_ENV=development nodemon index.js",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
+    "build:server": "cross-env NODE_ENV=production webpack --config webpack.config.server.js",
     "clean": "rimraf dist",
     "lint": "eslint client server || true",
     "test": "mocha client/utils/testSetup.js \"client/**/*.test.js\" || true"
@@ -53,6 +54,7 @@
     "style-loader": "^0.13.1",
     "webpack": "^1.13.2",
     "webpack-dev-middleware": "^1.8.4",
+    "webpack-externals-plugin": "^1.0.0",
     "webpack-hot-middleware": "^2.13.0",
     "webpack-manifest-plugin": "^1.1.0"
   }
