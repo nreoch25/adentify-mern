@@ -39,16 +39,29 @@ app.use(express.static(path.resolve(__dirname, "../dist")));
 
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {
+
+  // Import Manifests
+  const assetsManifest = process.env.webpackAssets && JSON.parse(process.env.webpackAssets);
+  const chunkManifest = process.env.webpackChunkAssets && JSON.parse(process.env.webpackChunkAssets);
+
   return `
     <!DOCTYPE HTML>
     <html>
       <head>
+        ${process.env.NODE_ENV === "production" ? `<link rel="stylesheet" href="${assetsManifest["/app.css"]}" />` : ""}
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,300,700" rel="stylesheet" type="text/css" />
       </head>
       <body>
         <div id="root"><div>${html}</div></div>
-        <script> window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}; </script>
-        <script src="/vendor.js"></script>
-        <script src="/app.js"></script>
+        <script>
+          window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};
+          ${process.env.NODE_ENV === "production" ?
+          `//<![CDATA[
+          window.webpackManifest = ${JSON.stringify(chunkManifest)};
+          //]]>` : ""}
+        </script>
+        <script src='${process.env.NODE_ENV === 'production' ? assetsManifest['/vendor.js'] : '/vendor.js'}'></script>
+        <script src='${process.env.NODE_ENV === 'production' ? assetsManifest['/app.js'] : '/app.js'}'></script>
       </body>
     </html>
   `;
