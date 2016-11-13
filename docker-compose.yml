@@ -1,0 +1,6 @@
+web:
+  build: .
+  ports:
+    - "80:8000"
+  environment:
+    NODE_ENV: production

@@ -7,7 +7,7 @@ COPY package.json /usr/src/app
 RUN npm install
 COPY . /usr/src/app
 
-ENV NODE_ENV development
+ENV NODE_ENV production
 
 EXPOSE 8000
-CMD ["npm", "start"]
+CMD ["npm", "run", "bs"]
