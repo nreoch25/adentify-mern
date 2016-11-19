@@ -28,6 +28,7 @@ class Header extends Component {
               <li id="nav-contact"><Link to="/contact">Contact</Link></li>
             </ul>
             <ul className="nav navbar-nav navbar-right">
+              <li id="nav-generator"><Link to="/generator"><span className="glyphicon glyphicon-saved right-margin"></span>Tag Generator</Link></li>
               <li id="nav-request"><Link to="/request"><span className="glyphicon glyphicon-signal right-margin"></span>Ad Request</Link></li>
             </ul>
             </div>
