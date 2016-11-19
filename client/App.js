@@ -8,6 +8,14 @@ import routes from "./routes";
 // Base stylesheet
 require("./styles/main.css");
 
+// Set the Navbar active class
+browserHistory.listen((evt) => {
+  const currentNav = evt.pathname.replace("/", "");
+  const activeNav = ( currentNav === "" ) ? "about" : currentNav;
+  window.jQuery(".navbar li.active").removeClass("active");
+  window.jQuery(`#nav-${activeNav}`).addClass("active");
+});
+
 export default function App(props) {
   return (
     <Provider store={props.store}>
