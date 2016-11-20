@@ -15,7 +15,7 @@ if (process.env.NODE_ENV !== "production") {
   require("./components/Features");
   require("./components/Support");
   require("./components/Contact");
-  require("./components/Generator");
+  require("./components/Saved");
   require("./components/Request");
 }
 
@@ -56,7 +56,7 @@ export default (
       path="generator"
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
-          cb(null, require("./components/Generator").default);
+          cb(null, require("./components/Saved").default);
         });
       }}
     />
