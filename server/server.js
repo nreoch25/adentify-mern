@@ -53,6 +53,7 @@ const renderFullPage = (html, initialState) => {
         ${process.env.NODE_ENV === "production" ? `<link rel="stylesheet" href="${assetsManifest["/app.css"]}" />` : ""}
         <link href="https://fonts.googleapis.com/css?family=Lato:400,300,700" rel="stylesheet" type="text/css" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script async="async" src="https://www.googletagservices.com/tag/js/gpt.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
       </head>
