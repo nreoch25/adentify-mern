@@ -1,6 +1,13 @@
 import React from "react";
 import { Route, IndexRoute } from "react-router";
+import gptRequest from "./utils/gptRequest";
 import App from "./components/App";
+
+const gptInit = () => {
+  if(typeof window !== "undefined") {
+    gptRequest.init();
+  }
+}
 
 // require.ensure polyfill for node
 if (typeof require.ensure !== "function") {
@@ -20,7 +27,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 export default (
-  <Route path="/" component={App}>
+  <Route path="/" component={App} onEnter={gptInit}>
     <IndexRoute
       getComponent={(nextState, cb) => {
         require.ensure([], require => {

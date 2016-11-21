@@ -1,22 +1,18 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import gptSetup from "../utils/gptSetup";
+import gptRequest from "../utils/gptRequest";
 import GptActions from "../actions/GptActions";
 
 class Request extends Component {
   constructor(props) {
     super(props);
+    this.state = { totalAds : 1 }
     this.adRequest = this.adRequest.bind(this);
+    this.adjustTotalAds = this.adjustTotalAds.bind(this);
   }
   componentDidMount() {
-    gptSetup.init();
     this.toggleModal();
-    /*this.props.gptActions.defineGPT({
-      networkID : "5876",
-      adUnits : "home",
-      tagType : "async",
-    });*/
   }
   componentWillReceiveProps() {
     this.toggleModal();
@@ -24,21 +20,51 @@ class Request extends Component {
   toggleModal() {
     window.jQuery("#myModal").modal("toggle");
   }
+  adjustTotalAds() {
+    let totalAds = this.refs.totalAds.value;
+    this.setState({ totalAds: totalAds});
+  }
+  totalAds() {
+    let { totalAds } = this.state;
+    let adSizes = [];
+    for(let i = 0; i < totalAds; i++) {
+      let adSizesRef = `adSizes${i}`
+      adSizes.push(
+        <fieldset key={i} className="form-group">
+          <label>Ad Sizes: Excepts multiple sizes</label>
+          <input  ref={adSizesRef} className="form-control" placeholder="example. 728x90, 300x250, 1x1" required />
+        </fieldset>
+      );
+    }
+    return adSizes;
+  }
+  getAdSizes() {
+    let totalAds = this.refs.totalAds.value;
+    let adSizesArray = [];
+    for(let i = 0; i < totalAds; i++) {
+      let curRef = `adSizes${i}`;
+      adSizesArray.push(this.refs[curRef].value);
+    }
+    return adSizesArray;
+  }
   adRequest(evt) {
     evt.preventDefault();
-    let gptObject = {};
-    gptObject.networkID = this.refs.networkID.value;
-    gptObject.singleRequest = true;
-    gptObject.totalAds = 3;
-    gptObject.AdSizes = [
-      [ "728x90" ],
-      [ "300x250" ]
-    ];
-    gptObject.adUnits = this.refs.adUnits.value;
-    gptObject.reference = this.refs.adDisplay;
-    // TODO check if form is valid and hide modal
+    let adSizes = this.getAdSizes();
+    let gptObject = {
+      networkID: this.refs.networkID.value,
+      adUnits: this.refs.adUnits.value,
+      totalAds: this.refs.totalAds.value,
+      adSizes: adSizes,
+      reference: this.refs.adDisplay
+    };
+
+    // TODO check if form is valid
+
+    gptRequest.gptElements(gptObject);
+    gptRequest.adRequests(gptObject);
+
+    // hide request form
     this.toggleModal();
-    this.props.gptActions.defineGPT(gptObject);
   }
   render() {
     return (
@@ -60,6 +86,17 @@ class Request extends Component {
                     <label>Ad Units:</label>
                     <input ref="adUnits" className="form-control" placeholder="example. sports/football/nfl" required />
                   </fieldset>
+                  <fieldset className="form-group">
+                    <label>Total Number of Ads:</label>
+                    <select ref="totalAds" className="form-control" onChange={this.adjustTotalAds}>
+                      <option defaultValue>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                  </fieldset>
+                  { this.totalAds() }
                   <button action="submit" className="btn btn-primary right-margin">Submit Request</button>
                 </form>
               </div>
