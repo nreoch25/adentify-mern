@@ -28,7 +28,14 @@ class Request extends Component {
     evt.preventDefault();
     let gptObject = {};
     gptObject.networkID = this.refs.networkID.value;
+    gptObject.singleRequest = true;
+    gptObject.totalAds = 3;
+    gptObject.AdSizes = [
+      [ "728x90" ],
+      [ "300x250" ]
+    ];
     gptObject.adUnits = this.refs.adUnits.value;
+    gptObject.reference = this.refs.adDisplay;
     // TODO check if form is valid and hide modal
     this.toggleModal();
     this.props.gptActions.defineGPT(gptObject);
@@ -62,6 +69,7 @@ class Request extends Component {
             </div>
           </div>
         </div>
+        <div ref="adDisplay"></div>
       </div>
     );
   }
