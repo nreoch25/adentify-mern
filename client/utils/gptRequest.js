@@ -6,7 +6,10 @@ class gptRequest {
       this.adDivs[i] = `ad-${Math.floor((Math.random() * 1000000) + 1)}`;
       let adDiv = document.createElement("div");
       adDiv.setAttribute("id", this.adDivs[i]);
-      adReference.appendChild(adDiv);
+      let adDivContainer = document.createElement("div");
+      adDivContainer.className = "well well-lg adrequest";
+      adDivContainer.appendChild(adDiv);
+      adReference.appendChild(adDivContainer);
     }
   }
   static getAdSizes(adSizes, totalAds) {
@@ -16,11 +19,8 @@ class gptRequest {
       adSizesArray[i] = adSizesArray[i].map(Number);
     }
 
-    console.log(adSizesArray[0]);
-
     let finalAdSizesArray = [];
     adSizesArray.map((requestSizes, i) => {
-      console.log("REQUEST", requestSizes, "INDEX", i);
       finalAdSizesArray[i] = [];
       function recurseSizes() {
         if(requestSizes.length >= 2) {
@@ -36,14 +36,26 @@ class gptRequest {
     });
     return finalAdSizesArray;
   }
+  static removeAds() {
+    this.win.googletag.destroySlots();
+    this.win.jQuery(".adrequest").remove();
+  }
   static adRequests(gptObject) {
+    let networkID = gptObject.networkID;
+    let adUnits = gptObject.adUnits;
     let adSizes = gptObject.adSizes;
     let totalAds = gptObject.totalAds;
+    // get the finalAdSizesArray array
     let finalAdSizesArray = this.getAdSizes(adSizes, totalAds);
-    console.log("Final Sizes", finalAdSizesArray);
+    // construct the ad hierarchy
+    let hierarchy = `/${networkID}/${adUnits}`;
+    console.log("HIERARCHY", hierarchy);
 
-    // TODO construct adsizes array that can be used by display call
-    // Make ad calls
+    for(let i = 0; i < finalAdSizesArray.length; i++) {
+      let adSizeArray = finalAdSizesArray[i];
+      console.log("Ad size array", adSizeArray);
+      this.win.googletag.pubads().display(hierarchy, adSizeArray, this.adDivs[i]);
+    }
   }
   static initGPT() {
     // init gpt object

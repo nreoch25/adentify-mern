@@ -14,6 +14,9 @@ class Request extends Component {
   componentDidMount() {
     this.toggleModal();
   }
+  componentWillUnmount() {
+    gptRequest.removeAds();
+  }
   componentWillReceiveProps() {
     this.toggleModal();
   }
@@ -59,6 +62,8 @@ class Request extends Component {
     };
 
     // TODO check if form is valid
+    // Remove previous ads
+    gptRequest.removeAds();
 
     gptRequest.gptElements(gptObject);
     gptRequest.adRequests(gptObject);

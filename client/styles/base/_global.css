@@ -1,5 +1,5 @@
 body {
-  background-color: #CCC;
+  background-color: #FFF;
 }
 
 .right-margin {
@@ -8,4 +8,8 @@ body {
 
 .top-margin {
   margin-top: 50px;
+}
+
+.well.adrequest {
+  margin-top: 25px;
 }
