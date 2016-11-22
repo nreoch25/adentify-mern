@@ -9,14 +9,38 @@ class gptRequest {
       adReference.appendChild(adDiv);
     }
   }
-  static adRequests(gptObject) {
-    let adSizes = gptObject.adSizes;
+  static getAdSizes(adSizes, totalAds) {
     let adSizesArray = [];
-    for(let i = 0; i < gptObject.totalAds; i++) {
+    for(let i = 0; i < totalAds; i++) {
       adSizesArray[i] = adSizes[i].replace(" ", "").split(/,|x/);
+      adSizesArray[i] = adSizesArray[i].map(Number);
     }
 
-    console.log(adSizesArray);
+    console.log(adSizesArray[0]);
+
+    let finalAdSizesArray = [];
+    adSizesArray.map((requestSizes, i) => {
+      console.log("REQUEST", requestSizes, "INDEX", i);
+      finalAdSizesArray[i] = [];
+      function recurseSizes() {
+        if(requestSizes.length >= 2) {
+          let sizeArray = requestSizes.slice(0, 2);
+          requestSizes.splice(0, 2);
+          finalAdSizesArray[i].push(sizeArray);
+          recurseSizes();
+        } else {
+          return;
+        }
+      }
+      recurseSizes();
+    });
+    return finalAdSizesArray;
+  }
+  static adRequests(gptObject) {
+    let adSizes = gptObject.adSizes;
+    let totalAds = gptObject.totalAds;
+    let finalAdSizesArray = this.getAdSizes(adSizes, totalAds);
+    console.log("Final Sizes", finalAdSizesArray);
 
     // TODO construct adsizes array that can be used by display call
     // Make ad calls
