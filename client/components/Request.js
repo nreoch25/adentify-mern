@@ -53,6 +53,9 @@ class Request extends Component {
   adRequest(evt) {
     evt.preventDefault();
     let adSizes = this.getAdSizes();
+
+    // TODO set target keyvalues
+
     let gptObject = {
       networkID: this.refs.networkID.value,
       adUnits: this.refs.adUnits.value,

@@ -51,6 +51,8 @@ class gptRequest {
     let hierarchy = `/${networkID}/${adUnits}`;
     console.log("HIERARCHY", hierarchy);
 
+    //TODO set targeting for all ads
+
     for(let i = 0; i < finalAdSizesArray.length; i++) {
       let adSizeArray = finalAdSizesArray[i];
       console.log("Ad size array", adSizeArray);
@@ -68,6 +70,22 @@ class gptRequest {
       this.win.googletag.enableServices();
     });
   }
+  static slotOnLoad() {
+    this.win.googletag.cmd.push(() => {
+      this.win.googletag.pubads().addEventListener("slotOnload", (event) => {
+        console.log('Slot has finished loading:', event);
+        let adRequest = event.slot.getContentUrl();
+        console.log("Ad request", adRequest);
+      });
+    });
+  }
+  static slotRenderEnded() {
+    this.win.googletag.cmd.push(() => {
+      this.win.googletag.pubads().addEventListener('slotRenderEnded', (event) => {
+
+      });
+    });
+  }
   static init() {
     // Avoid global lookups
     this.win = window;
@@ -75,6 +93,7 @@ class gptRequest {
     this.adDivs = [];
 
     this.initGPT();
+    this.slotOnLoad();
   }
 }
 
