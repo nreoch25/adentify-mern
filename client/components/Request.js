@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import gptRequest from "../utils/gptRequest";
-import GptActions from "../actions/GptActions";
+import { fetchAdRequests } from "../actions/GptActions";
 
 class Request extends Component {
   constructor(props) {
     super(props);
     this.state = { totalAds : 1 }
+    this.adRequests = [];
     this.adRequest = this.adRequest.bind(this);
     this.adjustTotalAds = this.adjustTotalAds.bind(this);
   }
@@ -50,6 +51,9 @@ class Request extends Component {
     }
     return adSizesArray;
   }
+  collectAdRequests(adRequests) {
+    this.props.fetchAdRequests(adRequests);
+  }
   adRequest(evt) {
     evt.preventDefault();
     let adSizes = this.getAdSizes();
@@ -69,7 +73,8 @@ class Request extends Component {
     gptRequest.removeAds();
 
     gptRequest.gptElements(gptObject);
-    gptRequest.adRequests(gptObject);
+    gptRequest.adRequests(gptObject, this);
+
 
     // hide request form
     this.toggleModal();
@@ -122,8 +127,5 @@ class Request extends Component {
 
 // Redux setup
 const mapStateToProps = ( state ) => ({ ...state });
-const mapDispatchToProps = ( dispatch ) => ({
-  gptActions: bindActionCreators(GptActions, dispatch)
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Request);
+export default connect(mapStateToProps, { fetchAdRequests })(Request);

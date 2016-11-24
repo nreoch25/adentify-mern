@@ -1,3 +1,5 @@
+import { fetchAdRequest } from "../actions/GptActions";
+
 class gptRequest {
   /* this creates ad containers */
   static gptElements(gptObject) {
@@ -39,8 +41,11 @@ class gptRequest {
   static removeAds() {
     this.win.googletag.destroySlots();
     this.win.jQuery(".adrequest").remove();
+    this.adRequestsArray = [];
   }
-  static adRequests(gptObject) {
+  static adRequests(gptObject, component) {
+    this.requestComponent = component;
+    console.log("ReqComponent", this.requestComponent);
     let networkID = gptObject.networkID;
     let adUnits = gptObject.adUnits;
     let adSizes = gptObject.adSizes;
@@ -70,19 +75,15 @@ class gptRequest {
       this.win.googletag.enableServices();
     });
   }
-  static slotOnLoad() {
-    this.win.googletag.cmd.push(() => {
-      this.win.googletag.pubads().addEventListener("slotOnload", (event) => {
-        console.log('Slot has finished loading:', event);
-        let adRequest = event.slot.getContentUrl();
-        console.log("Ad request", adRequest);
-      });
-    });
-  }
   static slotRenderEnded() {
     this.win.googletag.cmd.push(() => {
       this.win.googletag.pubads().addEventListener('slotRenderEnded', (event) => {
-
+        let adRequest = event.slot.getContentUrl();
+        // pass the contentURl / Adrequest to the Request Component
+        this.adRequestsArray.push(adRequest);
+        if(this.adRequestsArray.length === this.adDivs.length) {
+          this.requestComponent.collectAdRequests(this.adRequestsArray);
+        }
       });
     });
   }
@@ -91,9 +92,11 @@ class gptRequest {
     this.win = window;
     this.doc = document;
     this.adDivs = [];
+    this.adRequestsArray = [];
+    this.requestComponent = null;
 
     this.initGPT();
-    this.slotOnLoad();
+    this.slotRenderEnded();
   }
 }
 
