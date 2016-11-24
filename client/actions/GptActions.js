@@ -6,13 +6,17 @@ export function fetchAdRequests(adRequests) {
     console.log("GPT ACTIONS", adRequests);
     // TODO serialize array of adRequests / JSON.stringify({})
     // post ad Requests to express api
-    /*return fetch(API_URL, {
+    return fetch(API_URL, {
       method: "POST",
-      body: {
-        request
-      }
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      }),
+      mode: "same-origin",
+      cache: "default",
+      body: JSON.stringify({adRequests})
     }).then((response) => {
-      console.log(response);
-    });*/
+      console.log(response.json());
+    });
   }
 }

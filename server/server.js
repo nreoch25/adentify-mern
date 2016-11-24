@@ -6,6 +6,7 @@ import path from "path";
 // Webpack Requirements
 import webpack from "webpack";
 import config from "../webpack.config.dev.js";
+import { adentifyRouter } from "./router";
 import webpackDevMiddleware from "webpack-dev-middleware";
 import webpackHotMiddleware from "webpack-hot-middleware";
 
@@ -36,6 +37,9 @@ app.use(compression());
 app.use(bodyParser.json({ limit: "20mb" }));
 app.use(bodyParser.urlencoded({ limit: "20mb", extended: false }));
 app.use(express.static(path.resolve(__dirname, "../dist")));
+
+// Initialize adentify API
+adentifyRouter(app);
 
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {
