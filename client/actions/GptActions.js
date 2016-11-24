@@ -10,7 +10,7 @@ export function fetchAdRequests(adRequests) {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json",
-        Accept: "application/json",
+        Accept: "application/json"
       }),
       mode: "same-origin",
       cache: "default",
