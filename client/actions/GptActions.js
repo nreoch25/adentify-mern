@@ -1,5 +1,6 @@
 import fetch from "isomorphic-fetch";
 const API_URL = "http://localhost:8000/api/request";
+import { FETCH_AD_RESPONSES } from "./types";
 
 export function fetchAdRequests(adRequests) {
   return (dispatch) => {
@@ -16,7 +17,13 @@ export function fetchAdRequests(adRequests) {
       cache: "default",
       body: JSON.stringify({adRequests})
     }).then((response) => {
-      console.log(response.json());
+      return response.json();
+    }).then((response) => {
+      console.log(response.ads);
+      dispatch({
+        type: FETCH_AD_RESPONSES,
+        payload: response.ads
+      });
     });
   }
 }

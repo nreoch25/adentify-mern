@@ -13,8 +13,8 @@ exports.fetchRequests = function(req, res, next) {
         adResponses.push(requestObject);
         if(adResponses.length === totalRequests) {
           // Responses ready
-          console.log(adResponses);
-          res.send({ "hello": "world"});
+          // TODO setup headless browser
+          res.send({ ads: adResponses });
         }
       }
     });

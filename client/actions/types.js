@@ -1,0 +1,1 @@
+export const FETCH_AD_RESPONSES = "FETCH_AD_RESPONSES";

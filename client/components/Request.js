@@ -18,9 +18,6 @@ class Request extends Component {
   componentWillUnmount() {
     gptRequest.removeAds();
   }
-  componentWillReceiveProps() {
-    this.toggleModal();
-  }
   toggleModal() {
     window.jQuery("#myModal").modal("toggle");
   }
@@ -79,6 +76,16 @@ class Request extends Component {
     // hide request form
     this.toggleModal();
   }
+  displayAdResponses() {
+    let ads = this.props.ads;
+    if(typeof ads !== "undefined" && ads.length > 0) {
+      ads.map((ad) => {
+        console.log(ad);
+        // TODO display ads and information
+        // TODO fix toggleModal issue
+      });
+    }
+  }
   render() {
     return (
       <div>
@@ -120,12 +127,19 @@ class Request extends Component {
           </div>
         </div>
         <div ref="adDisplay"></div>
+        <div ref="adResponses">
+          { this.displayAdResponses() }
+        </div>
       </div>
     );
   }
 }
 
 // Redux setup
-const mapStateToProps = ( state ) => ({ ...state });
+function mapStateToProps(state) {
+  return {
+    ads : state.gpt.ads
+  }
+}
 
 export default connect(mapStateToProps, { fetchAdRequests })(Request);
