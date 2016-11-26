@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import gptRequest from "../utils/gptRequest";
 import { fetchAdRequests } from "../actions/GptActions";
+import DisplayAd from "./DisplayAd";
 
 class Request extends Component {
   constructor(props) {
@@ -33,7 +34,7 @@ class Request extends Component {
       adSizes.push(
         <fieldset key={i} className="form-group">
           <label>Ad Sizes: Excepts multiple sizes</label>
-          <input  ref={adSizesRef} className="form-control" placeholder="example. 728x90, 300x250, 1x1" required />
+          <input  ref={adSizesRef} className="form-control" placeholder="example. 728x90, 300x250, (1x1 for outofpage)" required />
         </fieldset>
       );
     }
@@ -78,12 +79,19 @@ class Request extends Component {
   }
   displayAdResponses() {
     let ads = this.props.ads;
+    let displayAds = [];
     if(typeof ads !== "undefined" && ads.length > 0) {
-      ads.map((ad) => {
+      ads.map((ad, i) => {
         console.log(ad);
+        displayAds.push(
+          <div key={i} className="well well-lg adrequest">
+            <DisplayAd ad={ad} />
+          </div>
+        );
         // TODO display ads and information
         // TODO fix toggleModal issue
       });
+      return displayAds;
     }
   }
   render() {

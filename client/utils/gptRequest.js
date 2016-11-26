@@ -43,6 +43,18 @@ class gptRequest {
     this.win.jQuery(".adrequest").remove();
     this.adRequestsArray = [];
   }
+  static checkOutofpage(adSizes) {
+    // check if 1x1 and return true
+    if(adSizes.length === 1) {
+      let width = adSizes[0][0];
+      let height = adSizes[0][1];
+      if(width === 1 && height === 1) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
   static adRequests(gptObject, component) {
     this.requestComponent = component;
     console.log("ReqComponent", this.requestComponent);
@@ -61,7 +73,17 @@ class gptRequest {
     for(let i = 0; i < finalAdSizesArray.length; i++) {
       let adSizeArray = finalAdSizesArray[i];
       console.log("Ad size array", adSizeArray);
-      this.win.googletag.pubads().display(hierarchy, adSizeArray, this.adDivs[i]);
+      let isOOP = this.checkOutofpage(adSizeArray);
+      if(isOOP) {
+        this.win.googletag.defineOutOfPageSlot(hierarchy, this.adDivs[i])
+          .addService(this.win.googletag.pubads());
+      } else {
+        this.win.googletag.defineSlot(hierarchy, adSizeArray, this.adDivs[i])
+          .addService(this.win.googletag.pubads());
+      }
+
+      // display ad
+      this.win.googletag.display(this.adDivs[i]);
     }
   }
   static initGPT() {
