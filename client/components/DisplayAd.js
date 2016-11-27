@@ -1,16 +1,17 @@
 import React, { Component, PropTypes } from "react";
+import gptRequest from "../utils/gptRequest";
 
 class DisplayAd extends Component {
   componentDidMount() {
-    console.log(this.props.ad);
+    let adObject = this.props.ad;
+    let reference = this.refs.advertisement;
+    gptRequest.setDisplayContent(adObject, reference);
     //TODO use googletag setContent to display ads
     // safeframe should be set to true
   }
   render() {
     return (
-      <div>
-        <h1>DisplayAd</h1>
-      </div>
+      <iframe ref="advertisement" src="about:blank" scrolling="no" marginWidth="0" marginHeight="0" frameBorder="no"></iframe>
     );
   }
 }

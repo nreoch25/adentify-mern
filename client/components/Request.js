@@ -82,7 +82,6 @@ class Request extends Component {
     let displayAds = [];
     if(typeof ads !== "undefined" && ads.length > 0) {
       ads.map((ad, i) => {
-        console.log(ad);
         displayAds.push(
           <div key={i} className="well well-lg adrequest">
             <DisplayAd ad={ad} />

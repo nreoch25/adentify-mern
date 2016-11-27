@@ -1,6 +1,43 @@
 import { fetchAdRequest } from "../actions/GptActions";
 
 class gptRequest {
+  static emptyResponse(ref) {
+    let response = this.doc.createElement("h3");
+    let responseText = this.doc.createTextNode("Empty Ad Response");
+    response.appendChild(responseText);
+    ref.parentNode.appendChild(response);
+    ref.setAttribute("width", "0");
+    ref.setAttribute("height", "0");
+  }
+  static setDisplayContent(ad, ref) {
+    console.log("AD", ad, "REF", ref);
+    // check if ad return is empty
+    console.log("HIERARCHY", this.hierarchy);
+    if(ad[this.hierarchy]._empty_ === true) {
+      console.log("NO AD AVAILABLE");
+      this.emptyResponse(ref);
+    } else {
+      // set the ad size array
+      let adSizes = [];
+      adSizes[0] = ad[this.hierarchy]._width_;
+      adSizes[1] = ad[this.hierarchy]._height_;
+      console.log(adSizes);
+
+      // display the content in an the iframe reference
+      let iframeContainer = ref;
+      let iframeDocument = iframeContainer.contentWindow.document;
+      // set the width and height based on adSize
+      iframeContainer.setAttribute("width", adSizes[0]);
+      iframeContainer.setAttribute("height", adSizes[1]);
+      // get the ad content
+      let content = ad[this.hierarchy]._html_;
+      // inject the ad content into the ad iframe
+      iframeDocument.open();
+      iframeDocument.write(content);
+      iframeDocument.close();
+
+    }
+  }
   /* this creates ad containers */
   static gptElements(gptObject) {
     let adReference = gptObject.reference;
@@ -57,7 +94,6 @@ class gptRequest {
   }
   static adRequests(gptObject, component) {
     this.requestComponent = component;
-    console.log("ReqComponent", this.requestComponent);
     let networkID = gptObject.networkID;
     let adUnits = gptObject.adUnits;
     let adSizes = gptObject.adSizes;
@@ -65,25 +101,25 @@ class gptRequest {
     // get the finalAdSizesArray array
     let finalAdSizesArray = this.getAdSizes(adSizes, totalAds);
     // construct the ad hierarchy
-    let hierarchy = `/${networkID}/${adUnits}`;
-    console.log("HIERARCHY", hierarchy);
+    this.hierarchy = `/${networkID}/${adUnits}`;
 
     //TODO set targeting for all ads
 
     for(let i = 0; i < finalAdSizesArray.length; i++) {
       let adSizeArray = finalAdSizesArray[i];
-      console.log("Ad size array", adSizeArray);
+      let slot;
       let isOOP = this.checkOutofpage(adSizeArray);
       if(isOOP) {
-        this.win.googletag.defineOutOfPageSlot(hierarchy, this.adDivs[i])
+        slot = this.win.googletag.defineOutOfPageSlot(this.hierarchy, this.adDivs[i])
           .addService(this.win.googletag.pubads());
       } else {
-        this.win.googletag.defineSlot(hierarchy, adSizeArray, this.adDivs[i])
+        slot = this.win.googletag.defineSlot(this.hierarchy, adSizeArray, this.adDivs[i])
           .addService(this.win.googletag.pubads());
       }
 
       // display ad
       this.win.googletag.display(this.adDivs[i]);
+      this.win.googletag.pubads().refresh([slot]);
     }
   }
   static initGPT() {
@@ -93,6 +129,7 @@ class gptRequest {
 
     this.win.googletag.cmd.push(() => {
       //set gpt rules
+      this.win.googletag.pubads().disableInitialLoad();
       this.win.googletag.pubads().enableAsyncRendering();
       this.win.googletag.enableServices();
     });
@@ -113,9 +150,11 @@ class gptRequest {
     // Avoid global lookups
     this.win = window;
     this.doc = document;
+
     this.adDivs = [];
     this.adRequestsArray = [];
     this.requestComponent = null;
+    this.hierarchy = null;
 
     this.initGPT();
     this.slotRenderEnded();
