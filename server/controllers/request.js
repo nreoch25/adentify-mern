@@ -1,13 +1,15 @@
 import request from "request";
 import vm from "vm";
-import { updateCorrelator } from "../utils/gptServer";
+import { updateCorrelator, replaceCorrelator } from "../utils/gptServer";
 
 exports.fetchRequests = function(req, res, next) {
   let adRequests = req.body.adRequests
   let adResponses = [];
   let totalRequests = adRequests.length;
+  let newCorrelator = updateCorrelator();
   adRequests.map((adRequest) => {
-    let updatedRequest = updateCorrelator(adRequest);
+    let updatedRequest = replaceCorrelator(newCorrelator, adRequest);
+    console.log(updatedRequest);
     request(updatedRequest, (error, response, body) => {
       if(response.statusCode = 200) {
         let jsonpSandbox = vm.createContext({callbackProxy: (r) => { return r; }});

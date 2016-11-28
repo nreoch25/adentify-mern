@@ -2,6 +2,7 @@ import { fetchAdRequest } from "../actions/GptActions";
 
 class gptRequest {
   static emptyResponse(ref) {
+    // return an empty adserver response
     let response = this.doc.createElement("h3");
     let responseText = this.doc.createTextNode("Empty Ad Response");
     response.appendChild(responseText);
@@ -38,8 +39,8 @@ class gptRequest {
 
     }
   }
-  /* this creates ad containers */
   static gptElements(gptObject) {
+    // create ad containers based on total Ads number
     let adReference = gptObject.reference;
     for(let i = 0; i < gptObject.totalAds; i++) {
       this.adDivs[i] = `ad-${Math.floor((Math.random() * 1000000) + 1)}`;
@@ -52,6 +53,8 @@ class gptRequest {
     }
   }
   static getAdSizes(adSizes, totalAds) {
+    // take adSizes array
+    // return gpt usable arrays
     let adSizesArray = [];
     for(let i = 0; i < totalAds; i++) {
       adSizesArray[i] = adSizes[i].replace(" ", "").split(/,|x/);
@@ -61,6 +64,10 @@ class gptRequest {
     let finalAdSizesArray = [];
     adSizesArray.map((requestSizes, i) => {
       finalAdSizesArray[i] = [];
+      // recursive function that takes first two sizes
+      // stores them in the final array
+      // checks if there are two numbers left
+      // if not it returns
       function recurseSizes() {
         if(requestSizes.length >= 2) {
           let sizeArray = requestSizes.slice(0, 2);
@@ -76,6 +83,7 @@ class gptRequest {
     return finalAdSizesArray;
   }
   static removeAds() {
+    // function to remove and reset ad slots
     this.win.googletag.destroySlots();
     this.win.jQuery(".adrequest").remove();
     this.adRequestsArray = [];
@@ -119,7 +127,7 @@ class gptRequest {
 
       // display ad
       this.win.googletag.display(this.adDivs[i]);
-      this.win.googletag.pubads().refresh([slot]);
+      this.win.googletag.pubads().refresh([slot], {changeCorrelator: false});
     }
   }
   static initGPT() {
