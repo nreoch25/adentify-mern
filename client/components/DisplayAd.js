@@ -6,8 +6,6 @@ class DisplayAd extends Component {
     let adObject = this.props.ad;
     let reference = this.refs.advertisement;
     gptRequest.setDisplayContent(adObject, reference);
-    //TODO use googletag setContent to display ads
-    // safeframe should be set to true
   }
   render() {
     return (
