@@ -6,6 +6,10 @@ body {
   margin-right: 8px;
 }
 
+.top-margin-small {
+  margin-top: 15px;
+}
+
 .top-margin {
   margin-top: 50px;
 }

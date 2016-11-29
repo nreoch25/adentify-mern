@@ -11,13 +11,16 @@ class Request extends Component {
     this.state = { totalAds : 1 }
     this.adRequests = [];
     this.adRequest = this.adRequest.bind(this);
+    this.displayModal = this.displayModal.bind(this);
     this.adjustTotalAds = this.adjustTotalAds.bind(this);
   }
   componentDidMount() {
     this.toggleModal();
   }
   componentWillUnmount() {
-    gptRequest.removeAds();
+    if(this.props.ads.length > 0) {
+      gptRequest.removeAds();
+    }
   }
   toggleModal() {
     window.jQuery("#myModal").modal("toggle");
@@ -95,9 +98,13 @@ class Request extends Component {
       return displayAds;
     }
   }
+  displayModal() {
+    this.toggleModal();
+  }
   render() {
     return (
       <div>
+        <button className="btn btn-info top-margin-small" onClick={this.displayModal}>Display Ad Request Form</button>
         <div id="myModal" className="modal fade" role="dialog">
           <div className="modal-dialog">
             <div className="modal-content">

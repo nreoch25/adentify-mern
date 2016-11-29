@@ -60,7 +60,7 @@ export default (
       }}
     />
     <Route
-      path="generator"
+      path="saved"
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require("./components/Saved").default);
