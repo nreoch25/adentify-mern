@@ -1,6 +1,14 @@
 import fetch from "isomorphic-fetch";
 const API_URL = "http://localhost:8000/api/request";
-import { FETCH_AD_RESPONSES } from "./types";
+import { FETCH_AD_RESPONSES, RESET_AD_RESPONSES } from "./types";
+
+export function resetAdResponses() {
+  console.log("here");
+  return {
+    type: RESET_AD_RESPONSES,
+    payload: []
+  }
+}
 
 export function fetchAdRequests(adRequests) {
   return (dispatch) => {

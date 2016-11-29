@@ -1,5 +1,3 @@
-import { fetchAdRequest } from "../actions/GptActions";
-
 class gptRequest {
   static emptyResponse(ref) {
     // return an empty adserver response
@@ -46,10 +44,7 @@ class gptRequest {
       this.adDivs[i] = `ad-${Math.floor((Math.random() * 1000000) + 1)}`;
       let adDiv = document.createElement("div");
       adDiv.setAttribute("id", this.adDivs[i]);
-      let adDivContainer = document.createElement("div");
-      adDivContainer.className = "well well-lg adrequest";
-      adDivContainer.appendChild(adDiv);
-      adReference.appendChild(adDivContainer);
+      adReference.appendChild(adDiv);
     }
   }
   static getAdSizes(adSizes, totalAds) {
@@ -83,10 +78,17 @@ class gptRequest {
     return finalAdSizesArray;
   }
   static removeAds() {
-    // function to remove and reset ad slots
+    // destroy gpt slots
     this.win.googletag.destroySlots();
+    // remove and clear hidden gpt display ads
     this.win.jQuery(".adrequest").remove();
     this.adRequestsArray = [];
+    this.adDivs = [];
+    // remove adentify api ads
+    this.win.jQuery("#adResponses").empty();
+    // reset redux state
+    this.requestComponent.resetAdRequests();
+
   }
   static checkOutofpage(adSizes) {
     // check if 1x1 and return true

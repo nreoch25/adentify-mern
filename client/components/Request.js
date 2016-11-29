@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import gptRequest from "../utils/gptRequest";
-import { fetchAdRequests } from "../actions/GptActions";
+import { fetchAdRequests, resetAdResponses } from "../actions/GptActions";
 import DisplayAd from "./DisplayAd";
 
 class Request extends Component {
@@ -49,6 +49,9 @@ class Request extends Component {
     }
     return adSizesArray;
   }
+  resetAdRequests() {
+    this.props.resetAdResponses();
+  }
   collectAdRequests(adRequests) {
     this.props.fetchAdRequests(adRequests);
   }
@@ -67,8 +70,6 @@ class Request extends Component {
     };
 
     // TODO check if form is valid
-    // Remove previous ads
-    gptRequest.removeAds();
 
     gptRequest.gptElements(gptObject);
     gptRequest.adRequests(gptObject, this);
@@ -79,6 +80,7 @@ class Request extends Component {
   }
   displayAdResponses() {
     let ads = this.props.ads;
+    console.log("ADS", this.props.ads);
     let displayAds = [];
     if(typeof ads !== "undefined" && ads.length > 0) {
       ads.map((ad, i) => {
@@ -133,8 +135,8 @@ class Request extends Component {
             </div>
           </div>
         </div>
-        <div ref="adDisplay"></div>
-        <div ref="adResponses">
+        <div ref="adDisplay" style={{"display": "none"}}></div>
+        <div ref="adResponses" id="adResponses">
           { this.displayAdResponses() }
         </div>
       </div>
@@ -149,4 +151,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { fetchAdRequests })(Request);
+export default connect(mapStateToProps, { fetchAdRequests, resetAdResponses })(Request);
