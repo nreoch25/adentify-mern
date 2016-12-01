@@ -81,12 +81,11 @@ class gptRequest {
     // destroy gpt slots
     this.win.googletag.destroySlots();
     // remove and clear hidden gpt display ads
-    this.win.jQuery(".adrequest").remove();
+    this.win.jQuery("#adRequests").empty();
     this.adRequestsArray = [];
     this.adDivs = [];
-    // remove adentify api ads
-    this.win.jQuery("#adResponses").empty();
     // reset redux state
+    // this will clear ads returned from api
     this.requestComponent.resetAdRequests();
 
   }

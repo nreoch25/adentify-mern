@@ -19,8 +19,11 @@ class Request extends Component {
   }
   componentWillUnmount() {
     if(this.props.ads.length > 0) {
-      gptRequest.removeAds();
+      this.removeAds();
     }
+  }
+  removeAds() {
+    gptRequest.removeAds();
   }
   toggleModal() {
     window.jQuery("#myModal").modal("toggle");
@@ -60,6 +63,10 @@ class Request extends Component {
   }
   adRequest(evt) {
     evt.preventDefault();
+    //remove old ads if they exist
+    if(this.props.ads.length > 0) {
+      this.removeAds();
+    }
     let adSizes = this.getAdSizes();
 
     // TODO set target keyvalues
@@ -142,7 +149,7 @@ class Request extends Component {
             </div>
           </div>
         </div>
-        <div ref="adDisplay" style={{"display": "none"}}></div>
+        <div ref="adDisplay" id="adRequests" style={{"display": "none"}}></div>
         <div ref="adResponses" id="adResponses">
           { this.displayAdResponses() }
         </div>
