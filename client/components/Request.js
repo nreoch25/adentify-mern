@@ -140,6 +140,9 @@ class Request extends Component {
                     </select>
                   </fieldset>
                   { this.totalAds() }
+                  <fieldset className="form-group">
+                    <label><input ref="saved" type="checkbox" />&nbsp;&nbsp;&nbsp;Save Ad Request</label>
+                  </fieldset>
                   <button action="submit" className="btn btn-primary right-margin">Submit Request</button>
                 </form>
               </div>
