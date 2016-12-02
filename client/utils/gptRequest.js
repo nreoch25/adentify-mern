@@ -107,6 +107,7 @@ class gptRequest {
     let adUnits = gptObject.adUnits;
     let adSizes = gptObject.adSizes;
     let totalAds = gptObject.totalAds;
+    let saveAds = gptObject.saved;
     // get the finalAdSizesArray array
     let finalAdSizesArray = this.getAdSizes(adSizes, totalAds);
     // construct the ad hierarchy

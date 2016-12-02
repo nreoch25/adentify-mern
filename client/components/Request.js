@@ -10,6 +10,7 @@ class Request extends Component {
     super(props);
     this.state = { totalAds : 1 }
     this.adRequests = [];
+    this.saveAds = false;
     this.adRequest = this.adRequest.bind(this);
     this.displayModal = this.displayModal.bind(this);
     this.adjustTotalAds = this.adjustTotalAds.bind(this);
@@ -60,6 +61,12 @@ class Request extends Component {
   }
   collectAdRequests(adRequests) {
     this.props.fetchAdRequests(adRequests);
+    if(this.saveAds === true) {
+      console.log("SAVE AD REQUESTS WITH LOCAL STORAGE");
+      // TODO Create Storage Utils for saved Ads
+      // TODO Use LocalStorage to store saved ad REQUESTS
+      // TODO save those requests as state using redux
+    }
   }
   adRequest(evt) {
     evt.preventDefault();
@@ -78,6 +85,11 @@ class Request extends Component {
       adSizes: adSizes,
       reference: this.refs.adDisplay
     };
+
+    // check if ad requests should be saved
+    if(this.refs.saved.checked) {
+      this.saveAds = true;
+    }
 
     // TODO check if form is valid
 
@@ -99,8 +111,6 @@ class Request extends Component {
             <DisplayAd ad={ad} />
           </div>
         );
-        // TODO display ads and information
-        // TODO fix toggleModal issue
       });
       return displayAds;
     }
