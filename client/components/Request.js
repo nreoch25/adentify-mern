@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import gptRequest from "../utils/gptRequest";
-import { fetchAdRequests, resetAdResponses } from "../actions/GptActions";
+import gptStorage from "../utils/gptStorage";
+import { fetchAdRequests, resetAdResponses, saveAdRequests } from "../actions/GptActions";
 import DisplayAd from "./DisplayAd";
 
 class Request extends Component {
@@ -63,9 +64,10 @@ class Request extends Component {
     this.props.fetchAdRequests(adRequests);
     if(this.saveAds === true) {
       console.log("SAVE AD REQUESTS WITH LOCAL STORAGE");
-      // TODO Create Storage Utils for saved Ads
       // TODO Use LocalStorage to store saved ad REQUESTS
-      // TODO save those requests as state using redux
+      gptStorage.setItem("adentify_adRequests", adRequests);
+      let items = gptStorage.getItem("adentify_adRequests");
+      this.props.saveAdRequests(JSON.parse(items));
     }
   }
   adRequest(evt) {
@@ -178,4 +180,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { fetchAdRequests, resetAdResponses })(Request);
+export default connect(mapStateToProps, { fetchAdRequests, resetAdResponses, saveAdRequests })(Request);

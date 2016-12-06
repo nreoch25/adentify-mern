@@ -10,6 +10,15 @@ export function resetAdResponses() {
   }
 }
 
+export function saveAdRequests(adRequests) {
+  return ( dispatch ) => {
+    console.log("STORED REQUESTS", adRequests);
+    // TODO Store in Redux state
+    // Saved Requests page needs to access
+    // Saved Requests state
+  }
+}
+
 export function fetchAdRequests(adRequests) {
   return (dispatch) => {
     return fetch(API_URL, {
