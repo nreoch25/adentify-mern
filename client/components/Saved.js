@@ -3,7 +3,11 @@ import { connect } from "react-redux";
 
 class Saved extends Component {
   getSavedRequests() {
-    console.log(this.props.saved);
+    let saved = this.props.saved;
+    // check if any saved requests in state
+    if(typeof saved !== "undefined" && saved.length > 0) {
+      console.log("SAVED", saved);
+    }
   }
   render() {
     return (

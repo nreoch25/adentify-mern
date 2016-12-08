@@ -9,12 +9,13 @@ import DisplayAd from "./DisplayAd";
 class Request extends Component {
   constructor(props) {
     super(props);
-    this.state = { totalAds : 1 }
+    this.state = { totalAds : 1, saveRequest: false }
     this.adRequests = [];
     this.saveAds = false;
     this.adRequest = this.adRequest.bind(this);
     this.displayModal = this.displayModal.bind(this);
     this.adjustTotalAds = this.adjustTotalAds.bind(this);
+    this.showRequestName = this.showRequestName.bind(this);
   }
   componentDidMount() {
     this.toggleModal();
@@ -47,6 +48,30 @@ class Request extends Component {
       );
     }
     return adSizes;
+  }
+  showRequestName() {
+    // check if ad requests should be saved
+    if(this.refs.saved.checked) {
+      this.setState({ saveRequest: true });
+      /*console.log("show request name");
+      return (
+        <fieldset ref="requestContainer" className="form-group">
+          <label>Ad Request Name</label>
+          <input  ref="requestName" className="form-control" placeholder="example. [PublisherName] - sports - 728x90|300x250|outofpage" required />
+        </fieldset>
+      );*/
+    } else {
+      this.setState({ saveRequest: false });
+    }
+  }
+  saveRequest() {
+    if(this.state.saveRequest === true) {
+      console.log("Display Request Name");
+      // TODO display request name input
+    } else {
+      console.log("Remove Request Name");
+      // TODO hide request name input
+    }
   }
   getAdSizes() {
     let totalAds = this.refs.totalAds.value;
@@ -106,6 +131,7 @@ class Request extends Component {
     let ads = this.props.ads;
     console.log("ADS", this.props.ads);
     let displayAds = [];
+    // check if any ads in state
     if(typeof ads !== "undefined" && ads.length > 0) {
       ads.map((ad, i) => {
         displayAds.push(
@@ -152,8 +178,9 @@ class Request extends Component {
                     </select>
                   </fieldset>
                   { this.totalAds() }
+                  { this.saveRequest() }
                   <fieldset className="form-group">
-                    <label><input ref="saved" type="checkbox" />&nbsp;&nbsp;&nbsp;Save Ad Request</label>
+                    <label><input ref="saved" type="checkbox" onChange={this.showRequestName} />&nbsp;&nbsp;&nbsp;Save Ad Request</label>
                   </fieldset>
                   <button action="submit" className="btn btn-primary right-margin">Submit Request</button>
                 </form>

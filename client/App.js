@@ -21,15 +21,17 @@ browserHistory.listen((evt) => {
 function initSavedRequests(store) {
   // init gpt storage
   gptStorage.init();
+  // get saved requests from localStorage
   let items = gptStorage.getItem("adentify_adRequests");
+  // if items dispatch requests to redux state
   if(items !== null) {
     store.dispatch(saveAdRequests(JSON.parse(items)));
   }
 }
 
 export default function App(props) {
-  console.log("STORE", props.store);
   // init saved request state
+  // if client side
   if(typeof window !== "undefined") {
     initSavedRequests(props.store);
   }
