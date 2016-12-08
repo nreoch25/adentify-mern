@@ -1,9 +1,8 @@
 import fetch from "isomorphic-fetch";
 const API_URL = "http://localhost:8000/api/request";
-import { FETCH_AD_RESPONSES, RESET_AD_RESPONSES } from "./types";
+import { FETCH_AD_RESPONSES, RESET_AD_RESPONSES, SAVE_AD_REQUESTS } from "./types";
 
 export function resetAdResponses() {
-  console.log("here");
   return {
     type: RESET_AD_RESPONSES,
     payload: []
@@ -11,11 +10,9 @@ export function resetAdResponses() {
 }
 
 export function saveAdRequests(adRequests) {
-  return ( dispatch ) => {
-    console.log("STORED REQUESTS", adRequests);
-    // TODO Store in Redux state
-    // Saved Requests page needs to access
-    // Saved Requests state
+  return {
+    type: SAVE_AD_REQUESTS,
+    payload: adRequests
   }
 }
 

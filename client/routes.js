@@ -5,6 +5,7 @@ import App from "./components/App";
 
 const gptInit = () => {
   if(typeof window !== "undefined") {
+    // init the gpt object
     gptRequest.init();
   }
 }

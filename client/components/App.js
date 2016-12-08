@@ -4,9 +4,6 @@ import gptStorage from "../utils/gptStorage";
 import Header from "./global/Header";
 
 class App extends Component {
-  componentDidMount() {
-    gptStorage.init();
-  }
   render() {
     return (
       <div>
