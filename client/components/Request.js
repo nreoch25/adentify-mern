@@ -12,15 +12,19 @@ class Request extends Component {
     this.state = { totalAds : 1, saveRequest: false }
     this.adRequests = [];
     this.saveAds = false;
+    this.requestName = "";
     this.adRequest = this.adRequest.bind(this);
     this.displayModal = this.displayModal.bind(this);
     this.adjustTotalAds = this.adjustTotalAds.bind(this);
     this.showRequestName = this.showRequestName.bind(this);
   }
   componentDidMount() {
+    // display request menu on component mounting
     this.toggleModal();
   }
   componentWillUnmount() {
+    // check if any ads in state
+    // remove ads on component unmount
     if(this.props.ads.length > 0) {
       this.removeAds();
     }
@@ -32,10 +36,13 @@ class Request extends Component {
     window.jQuery("#myModal").modal("toggle");
   }
   adjustTotalAds() {
+    // reset state to new ad Total
     let totalAds = this.refs.totalAds.value;
     this.setState({ totalAds: totalAds});
   }
   totalAds() {
+    // based on total ads add new
+    // input boxes for ad sizes
     let { totalAds } = this.state;
     let adSizes = [];
     for(let i = 0; i < totalAds; i++) {
@@ -53,27 +60,27 @@ class Request extends Component {
     // check if ad requests should be saved
     if(this.refs.saved.checked) {
       this.setState({ saveRequest: true });
-      /*console.log("show request name");
-      return (
-        <fieldset ref="requestContainer" className="form-group">
-          <label>Ad Request Name</label>
-          <input  ref="requestName" className="form-control" placeholder="example. [PublisherName] - sports - 728x90|300x250|outofpage" required />
-        </fieldset>
-      );*/
     } else {
       this.setState({ saveRequest: false });
     }
   }
   saveRequest() {
+    // saveRequest is checked true
+    // display RequestName input or return null
     if(this.state.saveRequest === true) {
-      console.log("Display Request Name");
-      // TODO display request name input
+      return (
+        <fieldset ref="requestContainer" className="form-group">
+          <label>Ad Request Name</label>
+          <input  ref="requestName" className="form-control" placeholder="example. [PublisherName] - sports - 728x90 | 300x250" required />
+        </fieldset>
+      );
     } else {
-      console.log("Remove Request Name");
-      // TODO hide request name input
+      return null;
     }
   }
   getAdSizes() {
+    // create adSizes Array based on totalAds.value
+    // and curRef for adSizes
     let totalAds = this.refs.totalAds.value;
     let adSizesArray = [];
     for(let i = 0; i < totalAds; i++) {
@@ -83,14 +90,19 @@ class Request extends Component {
     return adSizesArray;
   }
   resetAdRequests() {
+    // reset ad Responses on new form request
     this.props.resetAdResponses();
   }
   collectAdRequests(adRequests) {
+    // fetch adRequests using isomorphic fetch
     this.props.fetchAdRequests(adRequests);
+    // if saveAds is checked store into localStorage
     if(this.saveAds === true) {
-      console.log("SAVE AD REQUESTS WITH LOCAL STORAGE");
-      // TODO Use LocalStorage to store saved ad REQUESTS
-      gptStorage.setItem("adentify_adRequests", adRequests);
+      console.log("REQUEST NAME", this.requestName);
+      let curRequest = {};
+      curRequest.name = this.requestName;
+      curRequest.requests = adRequests
+      gptStorage.setItem("adentify_adRequests", curRequest);
       let items = gptStorage.getItem("adentify_adRequests");
       this.props.saveAdRequests(JSON.parse(items));
     }
@@ -116,6 +128,7 @@ class Request extends Component {
     // check if ad requests should be saved
     if(this.refs.saved.checked) {
       this.saveAds = true;
+      this.requestName = this.refs.requestName.value;
     }
 
     // TODO check if form is valid
