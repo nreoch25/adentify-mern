@@ -162,6 +162,7 @@ class Request extends Component {
   render() {
     return (
       <div>
+        <h1>Ad Request</h1>
         <button className="btn btn-info top-margin-small" onClick={this.displayModal}>Display Ad Request Form</button>
         <div id="myModal" className="modal fade" role="dialog">
           <div className="modal-dialog">

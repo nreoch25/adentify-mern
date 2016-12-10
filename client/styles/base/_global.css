@@ -2,6 +2,11 @@ body {
   background-color: #FFF;
 }
 
+.no-vertical-margin {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 .right-margin {
   margin-right: 8px;
 }

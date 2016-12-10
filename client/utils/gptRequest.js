@@ -2,6 +2,7 @@ class gptRequest {
   static emptyResponse(ref) {
     // return an empty adserver response
     let response = this.doc.createElement("h3");
+    response.className = "no-vertical-margin";
     let responseText = this.doc.createTextNode("Empty Ad Response");
     response.appendChild(responseText);
     ref.parentNode.appendChild(response);
