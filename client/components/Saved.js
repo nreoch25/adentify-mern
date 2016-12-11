@@ -1,7 +1,21 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { saveSubmittedRequest } from "../actions/GptActions";
 
 class Saved extends Component {
+  constructor(props) {
+    super(props);
+    this.submitSavedRequest = this.submitSavedRequest.bind(this);
+  }
+  submitSavedRequest(evt) {
+    let requestName = evt.currentTarget.previousSibling.innerText;
+    let saved = this.props.saved;
+    let submittedRequest = saved.filter((save) => {
+      if(save.name === requestName) { return save };
+    });
+    let adRequest = submittedRequest[0].requests;
+    this.props.saveSubmittedRequest(adRequest);
+  }
   getSavedRequests() {
     let saved = this.props.saved;
     let savedRequests = [];
@@ -11,7 +25,7 @@ class Saved extends Component {
         savedRequests.push(
           <div key={i} className="well well-lg adrequest">
             <h3 className="no-vertical-margin">{request.name}</h3>
-            <button className="btn btn-info top-margin-small">Submit Request</button>
+            <button className="btn btn-info top-margin-small" onClick={this.submitSavedRequest}>Submit Request</button>
           </div>
         );
       });
@@ -35,4 +49,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, null)(Saved);
+export default connect(mapStateToProps, { saveSubmittedRequest })(Saved);

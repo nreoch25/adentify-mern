@@ -10,6 +10,7 @@ exports.fetchRequests = function(req, res, next) {
   adRequests.map((adRequest) => {
     let updatedRequest = replaceCorrelator(newCorrelator, adRequest);
     console.log(updatedRequest);
+    // TODO need to look into different JSONP callbacks
     request(updatedRequest, (error, response, body) => {
       if(response.statusCode = 200) {
         let jsonpSandbox = vm.createContext({callbackProxy: (r) => { return r; }});

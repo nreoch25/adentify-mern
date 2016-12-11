@@ -20,7 +20,12 @@ class Request extends Component {
   }
   componentDidMount() {
     // display request menu on component mounting
-    this.toggleModal();
+    //this.toggleModal();
+    if(typeof this.props.submitted !== "undefined") {
+      console.log("SUBMITTED", this.props.submitted);
+      // TODO submit these requests and display
+    }
+
   }
   componentWillUnmount() {
     // check if any ads in state
@@ -217,7 +222,8 @@ class Request extends Component {
 // Redux setup
 function mapStateToProps(state) {
   return {
-    ads : state.gpt.ads
+    ads : state.gpt.ads,
+    submitted: state.gpt.submitted
   }
 }
 
