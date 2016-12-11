@@ -13,6 +13,7 @@ class Request extends Component {
     this.adRequests = [];
     this.saveAds = false;
     this.requestName = "";
+    this.adHierarchy = "";
     this.adRequest = this.adRequest.bind(this);
     this.displayModal = this.displayModal.bind(this);
     this.adjustTotalAds = this.adjustTotalAds.bind(this);
@@ -24,6 +25,7 @@ class Request extends Component {
     if(typeof this.props.submitted !== "undefined") {
       console.log("SUBMITTED", this.props.submitted);
       // TODO submit these requests and display
+      //this.props.fetchAdRequests(this.props.submitted);
     }
 
   }
@@ -106,7 +108,8 @@ class Request extends Component {
       console.log("REQUEST NAME", this.requestName);
       let curRequest = {};
       curRequest.name = this.requestName;
-      curRequest.requests = adRequests
+      curRequest.requests = adRequests;
+      curRequest.hierarchy = this.adHierarchy;
       gptStorage.setItem("adentify_adRequests", curRequest);
       let items = gptStorage.getItem("adentify_adRequests");
       this.props.saveAdRequests(JSON.parse(items));
@@ -134,6 +137,7 @@ class Request extends Component {
     if(this.refs.saved.checked) {
       this.saveAds = true;
       this.requestName = this.refs.requestName.value;
+      this.adHierarchy = `/${gptObject.networkID}/${gptObject.adUnits}`;
     }
 
     // TODO check if form is valid

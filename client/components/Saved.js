@@ -13,7 +13,7 @@ class Saved extends Component {
     let submittedRequest = saved.filter((save) => {
       if(save.name === requestName) { return save };
     });
-    let adRequest = submittedRequest[0].requests;
+    let adRequest = submittedRequest[0];
     this.props.saveSubmittedRequest(adRequest);
   }
   getSavedRequests() {
