@@ -9,9 +9,16 @@ class gptRequest {
     ref.setAttribute("width", "0");
     ref.setAttribute("height", "0");
   }
+  static setSubmittedHierarchy(hierarchy) {
+    this.submittedHierarchy = hierarchy;
+  }
   static setDisplayContent(ad, ref) {
     console.log("AD", ad, "REF", ref);
     // check if ad return is empty
+
+    if(typeof this.hierarchy === "undefined") {
+      this.hierarchy = this.submittedHierarchy;
+    }
     console.log("HIERARCHY", this.hierarchy);
     if(ad[this.hierarchy]._empty_ === true) {
       console.log("NO AD AVAILABLE");
@@ -87,8 +94,10 @@ class gptRequest {
     this.adDivs = [];
     // reset redux state
     // this will clear ads returned from api
-    this.requestComponent.resetAdRequests();
-
+    if(this.requestComponent !== null && typeof this.requestComponent !== "undefined") {
+      this.requestComponent.resetAdRequests();
+    }
+    // TODO reset the saved submitted requests
   }
   static checkOutofpage(adSizes) {
     // check if 1x1 and return true
@@ -165,7 +174,8 @@ class gptRequest {
     this.adDivs = [];
     this.adRequestsArray = [];
     this.requestComponent = null;
-    this.hierarchy = null;
+    this.submitComponent = null;
+    this.submittedHierarchy = null;
 
     this.initGPT();
     this.slotRenderEnded();

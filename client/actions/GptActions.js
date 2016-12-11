@@ -1,6 +1,6 @@
 import fetch from "isomorphic-fetch";
 const API_URL = "http://localhost:8000/api/request";
-import { FETCH_AD_RESPONSES, RESET_AD_RESPONSES, SAVE_AD_REQUESTS, SAVE_SUBMITTED_REQUESTS } from "./types";
+import { FETCH_AD_RESPONSES, RESET_AD_RESPONSES, SAVE_AD_REQUESTS, SAVE_SUBMITTED_REQUESTS, RESET_SAVED_RESPONSES } from "./types";
 
 export function resetAdResponses() {
   return {
@@ -9,7 +9,15 @@ export function resetAdResponses() {
   }
 }
 
+export function resetSavedResponses() {
+  return {
+    type: RESET_SAVED_RESPONSES,
+    payload: []
+  }
+}
+
 export function saveSubmittedRequest(adRequests) {
+  console.log(adRequests);
   return {
     type: SAVE_SUBMITTED_REQUESTS,
     payload: adRequests

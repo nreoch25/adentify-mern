@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import gptRequest from "../utils/gptRequest";
 import gptStorage from "../utils/gptStorage";
-import { fetchAdRequests, resetAdResponses, saveAdRequests } from "../actions/GptActions";
+import { fetchAdRequests, resetAdResponses, saveAdRequests, resetSavedRequests } from "../actions/GptActions";
 import DisplayAd from "./DisplayAd";
 
 class Request extends Component {
@@ -20,19 +20,29 @@ class Request extends Component {
     this.showRequestName = this.showRequestName.bind(this);
   }
   componentDidMount() {
+    console.log("here");
     // display request menu on component mounting
     //this.toggleModal();
-    if(typeof this.props.submitted !== "undefined") {
-      console.log("SUBMITTED", this.props.submitted);
-      // TODO submit these requests and display
-      //this.props.fetchAdRequests(this.props.submitted);
+    let submitted = this.props.submitted;
+    console.log(submitted);
+    if(submitted.length > 0) {
+      console.log("SUBMITTED", submitted);
+      this.props.fetchAdRequests(submitted[0].requests);
     }
+    /*if(this.props.submitted !== "undefined") {
+      console.log("SUBMITTED", this.props.submitted);
+      console.log("LENGTH", this.props.submitted.length);
+      // TODO submit these requests and display
+
+      this.props.fetchAdRequests(this.props.submitted.requests);
+    }*/
 
   }
   componentWillUnmount() {
     // check if any ads in state
     // remove ads on component unmount
     if(this.props.ads.length > 0) {
+      console.log("REMOVE")
       this.removeAds();
     }
   }
@@ -99,6 +109,10 @@ class Request extends Component {
   resetAdRequests() {
     // reset ad Responses on new form request
     this.props.resetAdResponses();
+  }
+  resetSubmitRequests() {
+    // reset ad Responses requests from saved
+    this.props.resetSavedResponses();
   }
   collectAdRequests(adRequests) {
     // fetch adRequests using isomorphic fetch

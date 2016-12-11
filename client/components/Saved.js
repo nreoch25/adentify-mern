@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import gptRequest from "../utils/gptRequest"
 import { saveSubmittedRequest } from "../actions/GptActions";
 
 class Saved extends Component {
   constructor(props) {
     super(props);
+
     this.submitSavedRequest = this.submitSavedRequest.bind(this);
   }
   submitSavedRequest(evt) {
@@ -13,8 +15,8 @@ class Saved extends Component {
     let submittedRequest = saved.filter((save) => {
       if(save.name === requestName) { return save };
     });
-    let adRequest = submittedRequest[0];
-    this.props.saveSubmittedRequest(adRequest);
+    gptRequest.setSubmittedHierarchy(submittedRequest[0].hierarchy);
+    this.props.saveSubmittedRequest(submittedRequest);
   }
   getSavedRequests() {
     let saved = this.props.saved;
