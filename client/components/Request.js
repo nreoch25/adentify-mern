@@ -24,7 +24,7 @@ class Request extends Component {
     // display request menu on component mounting
     //this.toggleModal();
     let submitted = this.props.submitted;
-    console.log(submitted);
+    console.log("submitted", submitted);
     if(submitted.length > 0) {
       console.log("SUBMITTED", submitted);
       this.props.fetchAdRequests(submitted[0].requests);

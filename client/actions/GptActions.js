@@ -17,7 +17,7 @@ export function resetSavedResponses() {
 }
 
 export function saveSubmittedRequest(adRequests) {
-  console.log(adRequests);
+  console.log("SAVE SUBMITTED", adRequests);
   return {
     type: SAVE_SUBMITTED_REQUESTS,
     payload: adRequests
