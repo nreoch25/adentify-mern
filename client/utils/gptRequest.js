@@ -92,12 +92,6 @@ class gptRequest {
     this.win.jQuery("#adRequests").empty();
     this.adRequestsArray = [];
     this.adDivs = [];
-    // reset redux state
-    // this will clear ads returned from api
-    if(this.requestComponent !== null && typeof this.requestComponent !== "undefined") {
-      this.requestComponent.resetAdRequests();
-    }
-    // TODO reset the saved submitted requests
   }
   static checkOutofpage(adSizes) {
     // check if 1x1 and return true
@@ -111,8 +105,8 @@ class gptRequest {
       }
     }
   }
-  static adRequests(gptObject, component) {
-    this.requestComponent = component;
+  static adRequests(gptObject, reference) {
+    this.requestComponent = reference;
     let networkID = gptObject.networkID;
     let adUnits = gptObject.adUnits;
     let adSizes = gptObject.adSizes;
@@ -174,7 +168,6 @@ class gptRequest {
     this.adDivs = [];
     this.adRequestsArray = [];
     this.requestComponent = null;
-    this.submitComponent = null;
     this.submittedHierarchy = null;
 
     this.initGPT();

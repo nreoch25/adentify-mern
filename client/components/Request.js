@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import gptRequest from "../utils/gptRequest";
 import gptStorage from "../utils/gptStorage";
-import { fetchAdRequests, resetAdResponses, saveAdRequests, resetSavedRequests } from "../actions/GptActions";
+import { fetchAdRequests, resetAdResponses, saveAdRequests, resetSavedResponses } from "../actions/GptActions";
 import DisplayAd from "./DisplayAd";
 
 class Request extends Component {
@@ -41,13 +41,14 @@ class Request extends Component {
   componentWillUnmount() {
     // check if any ads in state
     // remove ads on component unmount
-    if(this.props.ads.length > 0) {
-      console.log("REMOVE")
+    if(this.props.ads.length > 0 || this.props.submitted.length > 1) {
       this.removeAds();
     }
   }
   removeAds() {
     gptRequest.removeAds();
+    this.props.resetAdResponses();
+    this.props.resetSavedResponses();
   }
   toggleModal() {
     window.jQuery("#myModal").modal("toggle");
@@ -132,7 +133,7 @@ class Request extends Component {
   adRequest(evt) {
     evt.preventDefault();
     //remove old ads if they exist
-    if(this.props.ads.length > 0) {
+    if(this.props.ads.length > 0 || this.props.submitted.length > 0) {
       this.removeAds();
     }
     let adSizes = this.getAdSizes();
@@ -245,4 +246,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { fetchAdRequests, resetAdResponses, saveAdRequests })(Request);
+export default connect(mapStateToProps, { fetchAdRequests, resetAdResponses, saveAdRequests, resetSavedResponses })(Request);
