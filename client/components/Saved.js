@@ -8,6 +8,11 @@ class Saved extends Component {
     super(props);
 
     this.submitSavedRequest = this.submitSavedRequest.bind(this);
+    this.deleteSavedRequest = this.deleteSavedRequest.bind(this);
+  }
+  deleteSavedRequest(evt) {
+    let requestName = evt.currentTarget.previousSibling.previousSibling.innerText;
+    console.log("DELETE", requestName);
   }
   submitSavedRequest(evt) {
     let requestName = evt.currentTarget.previousSibling.innerText;
@@ -27,7 +32,8 @@ class Saved extends Component {
         savedRequests.push(
           <div key={i} className="well well-lg adrequest">
             <h3 className="no-vertical-margin">{request.name}</h3>
-            <button className="btn btn-info top-margin-small" onClick={this.submitSavedRequest}>Submit Request</button>
+            <button className="btn btn-success top-margin-small right-margin" onClick={this.submitSavedRequest}>Submit Request</button>
+            <button className="btn btn-danger top-margin-small" onClick={this.deleteSavedRequest}>Delete Request</button>
           </div>
         );
       });

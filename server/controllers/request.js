@@ -16,12 +16,13 @@ exports.fetchRequests = function(req, res, next) {
         // check for alternate jsonp callback
         if(body.indexOf("googletag.impl.pubads.") > -1) {
           let newBody = body.replace("googletag.impl.pubads.", "");
-          let jsonpSandbox = vm.createContext({callbackProxy1: (r) => { return r; }});
-          requestObject = vm.runInContext(newBody, jsonpSandbox);
-        } else {
-          let jsonpSandbox = vm.createContext({callbackProxy: (r) => { return r; }});
-          requestObject = vm.runInContext(body, jsonpSandbox);
+          let callbackFunction = newBody.match(/callbackProxy(\d+)/);
+          newBody = newBody.replace(callbackFunction[0], "");
+          newBody = `callbackProxy${newBody}`;
         }
+
+        let jsonpSandbox = vm.createContext({callbackProxy: (r) => { return r; }});
+        let requestObject = vm.runInContext(body, jsonpSandbox);
 
         adResponses.push(requestObject);
         if(adResponses.length === totalRequests) {
