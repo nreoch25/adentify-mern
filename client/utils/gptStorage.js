@@ -13,6 +13,10 @@ class gptStorage {
       this.storage.setItem(key, JSON.stringify(this.requestsArray));
     }
   }
+  static overwriteItem(key, value) {
+    console.log("OVERWRITE", value);
+    this.storage.setItem(key, JSON.stringify(value))
+  }
   static getItem(key) {
     let items = this.storage.getItem(key);
     return items;

@@ -16,7 +16,7 @@ class gptRequest {
     console.log("AD", ad, "REF", ref);
     // check if ad return is empty
 
-    if(typeof this.hierarchy === "undefined") {
+    if(this.hierarchy === null) {
       this.hierarchy = this.submittedHierarchy;
     }
     console.log("HIERARCHY", this.hierarchy);
@@ -92,6 +92,7 @@ class gptRequest {
     this.win.jQuery("#adRequests").empty();
     this.adRequestsArray = [];
     this.adDivs = [];
+    this.hierarchy = null;
   }
   static checkOutofpage(adSizes) {
     // check if 1x1 and return true
@@ -169,6 +170,7 @@ class gptRequest {
     this.adRequestsArray = [];
     this.requestComponent = null;
     this.submittedHierarchy = null;
+    this.hierarchy = null;
 
     this.initGPT();
     this.slotRenderEnded();

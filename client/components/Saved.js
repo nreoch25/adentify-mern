@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import gptRequest from "../utils/gptRequest"
-import { saveSubmittedRequest } from "../actions/GptActions";
+import gptRequest from "../utils/gptRequest";
+import gptStorage from "../utils/gptStorage";
+import { saveSubmittedRequest, updateSavedResponses } from "../actions/GptActions";
 
 class Saved extends Component {
   constructor(props) {
@@ -13,6 +14,12 @@ class Saved extends Component {
   deleteSavedRequest(evt) {
     let requestName = evt.currentTarget.previousSibling.previousSibling.innerText;
     console.log("DELETE", requestName);
+    let saved = this.props.saved;
+    let newSavedRequests = saved.filter((save) => {
+      if(save.name !== requestName) { return save }
+    });
+    gptStorage.overwriteItem("adentify_adRequests", newSavedRequests);
+    this.props.updateSavedResponses(newSavedRequests);
   }
   submitSavedRequest(evt) {
     let requestName = evt.currentTarget.previousSibling.innerText;
@@ -57,4 +64,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { saveSubmittedRequest })(Saved);
+export default connect(mapStateToProps, { saveSubmittedRequest, updateSavedResponses })(Saved);

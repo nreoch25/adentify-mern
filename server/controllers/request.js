@@ -19,10 +19,12 @@ exports.fetchRequests = function(req, res, next) {
           let callbackFunction = newBody.match(/callbackProxy(\d+)/);
           newBody = newBody.replace(callbackFunction[0], "");
           newBody = `callbackProxy${newBody}`;
+          let jsonpSandbox = vm.createContext({callbackProxy: (r) => { return r; }});
+          requestObject = vm.runInContext(newBody, jsonpSandbox);
+        } else {
+          let jsonpSandbox = vm.createContext({callbackProxy: (r) => { return r; }});
+          requestObject = vm.runInContext(body, jsonpSandbox);
         }
-
-        let jsonpSandbox = vm.createContext({callbackProxy: (r) => { return r; }});
-        let requestObject = vm.runInContext(body, jsonpSandbox);
 
         adResponses.push(requestObject);
         if(adResponses.length === totalRequests) {
