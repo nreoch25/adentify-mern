@@ -10,6 +10,7 @@
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
     "build:server": "cross-env NODE_ENV=production webpack --config webpack.config.server.js",
     "clean": "rimraf dist",
+    "slate": "rimraf node_modules && npm install",
     "lint": "eslint client server || true",
     "test": "mocha client/utils/testSetup.js \"client/**/*.test.js\" || true"
   },
