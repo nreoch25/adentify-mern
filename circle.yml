@@ -10,6 +10,8 @@ dependencies:
     - sudo pip install docker-compose
   override:
     - yarn
+  cache_directories:
+    - ~/.cache/yarn
 
 test:
   override:
