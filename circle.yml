@@ -8,6 +8,8 @@ dependencies:
   pre:
     - sudo pip install --upgrade pip
     - sudo pip install docker-compose
+  override:
+    - yarn
 
 test:
   override:
