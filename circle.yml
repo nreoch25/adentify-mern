@@ -1,4 +1,4 @@
-machine:
+nraymachine:
   pre:
     - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
   services:
@@ -14,4 +14,4 @@ dependencies:
 test:
   override:
     - docker-compose up -d
-    - docker-compose run web npm test
+    - docker-compose run web yarn test
