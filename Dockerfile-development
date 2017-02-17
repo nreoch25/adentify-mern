@@ -1,6 +1,6 @@
 FROM node:6.0.0
 
-RUN npm install -g yarnpkg
+RUN npm install -g yarn
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
