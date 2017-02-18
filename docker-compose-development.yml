@@ -2,6 +2,6 @@ web:
   build: .
   dockerfile: Dockerfile-development
   ports:
-    - "8000:8000"
+    - "80:8000"
   environment:
     NODE_ENV: development
