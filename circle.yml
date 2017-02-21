@@ -25,3 +25,7 @@ deployment:
       - docker tag adentifymern_web $DOCKER_HUB_USER_ID/adentify-mern:latest
       - docker push $DOCKER_HUB_USER_ID/adentify-mern:$CIRCLE_SHA1
       - docker push $DOCKER_HUB_USER_ID/adentify-mern:latest
+      - docker tag adentifymern_nginx $DOCKER_HUB_USER_ID/adentify-mern-nginx:$CIRCLE_SHA1
+      - docker tag adentifymern_nginx $DOCKER_HUB_USER_ID/adentify-mern-nginx:latest
+      - docker push $DOCKER_HUB_USER_ID/adentify-mern-nginx:$CIRCLE_SHA1
+      - docker push $DOCKER_HUB_USER_ID/adentify-mern-nginx:latest

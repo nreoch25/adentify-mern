@@ -1,8 +1,14 @@
-version: '2'
+version: "2"
 services:
+  nginx:
+    build: nginx
+    ports:
+      - "8000:80"
+    links:
+      - web:web
   web:
     build: .
     ports:
-      - "80:8000"
+      - "3000:3000"
     environment:
       NODE_ENV: production
