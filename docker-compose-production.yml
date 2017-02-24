@@ -1,9 +1,16 @@
 version: "2"
 services:
+  nginx:
+    image: nreoch9/adentify-mern-nginx:latest
+    restart: always
+    ports:
+      - "80:80"
+    links:
+      - web:web
   web:
     image: nreoch9/adentify-mern:latest
     restart: always
     ports:
-      - "80:8000"
+      - "3000:3000"
     environment:
       NODE_ENV: production
