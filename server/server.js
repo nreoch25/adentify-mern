@@ -36,7 +36,10 @@ import serverConfig from "./config";
 app.use(compression());
 app.use(bodyParser.json({ limit: "20mb" }));
 app.use(bodyParser.urlencoded({ limit: "20mb", extended: false }));
-app.use(express.static(path.resolve(__dirname, "../dist")));
+
+if(process.env.NODE_ENV === "development") {
+  app.use(express.static(path.resolve(__dirname, "../dist")));
+}
 
 // Initialize adentify API
 adentifyRouter(app);
