@@ -5,6 +5,8 @@ services:
     restart: always
     ports:
       - "80:80"
+    volumes_from:
+      - web
     links:
       - web:web
   web:
@@ -12,5 +14,7 @@ services:
     restart: always
     ports:
       - "3000:3000"
+    volumes:
+      - /usr/src/app/dist
     environment:
       NODE_ENV: production
