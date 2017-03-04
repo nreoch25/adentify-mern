@@ -1,5 +1,5 @@
 import fetch from "isomorphic-fetch";
-const API_URL = "http://138.197.35.72/api/request";
+const API_URL = "http://45.55.93.29/api/request";
 //const API_URL = "http://localhost:8000/api/request";
 import { FETCH_AD_RESPONSES, RESET_AD_RESPONSES, SAVE_AD_REQUESTS, SAVE_SUBMITTED_REQUESTS, RESET_SAVED_RESPONSES, UPDATE_SAVED_RESPONSES } from "./types";
 
