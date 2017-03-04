@@ -3,12 +3,16 @@ services:
   nginx:
     build: nginx
     ports:
-      - "8000:80"
+      - "80:80"
+    volumes_from:
+      - web
     links:
       - web:web
   web:
     build: .
     ports:
       - "3000:3000"
+    volumes:
+      - /usr/src/app/dist
     environment:
       NODE_ENV: production

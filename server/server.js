@@ -57,7 +57,7 @@ const renderFullPage = (html, initialState) => {
       <head>
         <title>Adentify</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        ${process.env.NODE_ENV === "production" ? `<link rel="stylesheet" href="${assetsManifest["/app.css"]}" />` : ""}
+        ${process.env.NODE_ENV === "production" ? `<link rel="stylesheet" href="${assetsManifest["/public/app.css"]}" />` : ""}
         <link href="https://fonts.googleapis.com/css?family=Lato:400,300,700" rel="stylesheet" type="text/css" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script async="async" src="https://www.googletagservices.com/tag/js/gpt.js"></script>
@@ -68,13 +68,15 @@ const renderFullPage = (html, initialState) => {
         <div id="root"><div>${html}</div></div>
         <script>
           window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};
+        </script>
+        <script>
           ${process.env.NODE_ENV === "production" ?
           `//<![CDATA[
           window.webpackManifest = ${JSON.stringify(chunkManifest)};
           //]]>` : ""}
         </script>
-        <script src='${process.env.NODE_ENV === 'production' ? assetsManifest['/vendor.js'] : '/vendor.js'}'></script>
-        <script src='${process.env.NODE_ENV === 'production' ? assetsManifest['/app.js'] : '/app.js'}'></script>
+        <script src='${process.env.NODE_ENV === 'production' ? assetsManifest['/public/vendor.js'] : '/vendor.js'}'></script>
+        <script src='${process.env.NODE_ENV === 'production' ? assetsManifest['/public/app.js'] : '/app.js'}'></script>
       </body>
     </html>
   `;

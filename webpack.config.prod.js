@@ -20,10 +20,10 @@ module.exports = {
     ]
   },
   output: {
-    path: __dirname + "/dist/",
+    path: __dirname + "/dist/public/",
     filename: "[name].[chunkhash].js",
     chunkFilename: "[name].[chunkhash].js",
-    publicPath: "/"
+    publicPath: "/public/"
   },
   resolve: {
     extensions: [ "", ".js", ".jsx", ".css" ],
@@ -63,7 +63,7 @@ module.exports = {
     }),
     new ExtractTextPlugin("app.[chunkhash].css", { allChunks: true }),
     new ManifestPlugin({
-      basePath: "/"
+      basePath: "/public/"
     }),
     new ChunkManifestPlugin({
       filename: "chunk-manifest.json",
