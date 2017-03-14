@@ -15,10 +15,22 @@ body {
   margin-top: 15px;
 }
 
-.top-margin {
+.top-margin-medium {
+  margin-top: 30px;
+}
+
+.top-margin-large {
   margin-top: 50px;
 }
 
 .well.adrequest {
   margin-top: 25px;
+}
+
+.top-border-none {
+  border-top: none;
+}
+
+.border-rounded {
+  border-radius: 3px;
 }
