@@ -18,7 +18,9 @@ class Saved extends Component {
     let newSavedRequests = saved.filter((save) => {
       if(save.name !== requestName) { return save }
     });
+    // overwrite with filtered array
     gptStorage.overwriteItem("adentify_adRequests", newSavedRequests);
+    // update redux saved state
     this.props.updateSavedResponses(newSavedRequests);
   }
   submitSavedRequest(evt) {
