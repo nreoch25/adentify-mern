@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router";
 
+import logo from "../../images/adentify.png";
+
 class Header extends Component {
   componentDidMount() {
     // Set the initial active class
