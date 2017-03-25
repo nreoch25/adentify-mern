@@ -11,6 +11,10 @@ body {
   margin-right: 8px;
 }
 
+.top-margin-xsmall {
+  margin-top: 3px;
+}
+
 .top-margin-small {
   margin-top: 15px;
 }
@@ -37,6 +41,7 @@ body {
 
 .logo-header-container {
   text-align:center;
+  height: 117px;
 }
 
 .logo-header-content {
@@ -46,7 +51,7 @@ body {
 }
 
 .logo-header-image {
-  margin-bottom: 20px;
+  margin-bottom:15px;
 }
 
 .logo-header-text {

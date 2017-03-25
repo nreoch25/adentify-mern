@@ -1,13 +1,17 @@
 import React, { Component } from "react";
-import logo from "../images/adentify.png";
+import Logo from "./global/Logo";
+
 
 class About extends Component {
   render() {
     return (
-      <div className="logo-header-container">
-        <div className="logo-header-content">
-          <img className="logo-header-image" src={logo} />
-          <div className="logo-header-text">dentify</div>
+      <div>
+        <Logo />
+        <div className="panel panel-default top-margin-large">
+          <div className="panel-heading">
+            <h2 className="top-margin-xsmall"><span className="label label-info">About Adentify</span></h2>
+          </div>
+          <div className="panel-body">About Adentify content</div>
         </div>
       </div>
     );

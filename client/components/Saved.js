@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Logo from "./global/Logo";
 import { connect } from "react-redux";
 import gptRequest from "../utils/gptRequest";
 import gptStorage from "../utils/gptStorage";
@@ -52,8 +53,15 @@ class Saved extends Component {
   render() {
     return (
       <div>
-        <h1>Saved Requests</h1>
-        { this.getSavedRequests() }
+        <Logo />
+        <div className="panel panel-default top-margin-large">
+          <div className="panel-heading">
+            <h2 className="top-margin-xsmall"><span className="label label-info">Saved Adentify Requests</span></h2>
+          </div>
+          <div className="panel-body">
+            { this.getSavedRequests() }
+          </div>
+        </div>
       </div>
     );
   }
