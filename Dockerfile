@@ -1,6 +1,7 @@
 FROM node:6.0.0
 
 RUN npm install -g yarn
+RUN npm install -g gulp
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app

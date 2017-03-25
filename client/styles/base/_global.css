@@ -34,3 +34,24 @@ body {
 .border-rounded {
   border-radius: 3px;
 }
+
+.logo-header-container {
+  text-align:center;
+}
+
+.logo-header-content {
+  position:relative;
+  margin: 20px auto 0 auto;
+  display:inline-block;
+}
+
+.logo-header-image {
+  margin-bottom: 20px;
+}
+
+.logo-header-text {
+  font-size: 70px;
+  font-weight: 300;
+  display:inline-block;
+  margin-left:-22px;
+}
