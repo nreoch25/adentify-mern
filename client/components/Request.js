@@ -21,7 +21,6 @@ class Request extends Component {
     this.showRequestName = this.showRequestName.bind(this);
   }
   componentDidMount() {
-    console.log("here");
     // display request menu on component mounting
     //this.toggleModal();
     let submitted = this.props.submitted;
@@ -30,14 +29,6 @@ class Request extends Component {
       console.log("SUBMITTED", submitted);
       this.props.fetchAdRequests(submitted[0].requests);
     }
-    /*if(this.props.submitted !== "undefined") {
-      console.log("SUBMITTED", this.props.submitted);
-      console.log("LENGTH", this.props.submitted.length);
-      // TODO submit these requests and display
-
-      this.props.fetchAdRequests(this.props.submitted.requests);
-    }*/
-
   }
   componentWillUnmount() {
     // check if any ads in state
