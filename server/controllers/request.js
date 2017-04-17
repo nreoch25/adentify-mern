@@ -1,6 +1,6 @@
 import request from "request";
 import vm from "vm";
-import { updateCorrelator, replaceCorrelator } from "../utils/gptServer";
+import { updateCorrelator, replaceCorrelator, writeAdRequestFiles } from "../utils/gptServer";
 import { phantomService } from "../services/phantomService";
 
 exports.fetchRequests = function(req, res, next) {
@@ -30,8 +30,8 @@ exports.fetchRequests = function(req, res, next) {
         adResponses.push(requestObject);
         if(adResponses.length === totalRequests) {
           // Responses ready
-          console.log("RESPONSES", adResponses);
-          // TODO setup headless browser
+          // TODO save ads in a directory
+          writeAdRequestFiles(adResponses)
           phantomService(adResponses)
           res.send({ ads: adResponses });
         }
