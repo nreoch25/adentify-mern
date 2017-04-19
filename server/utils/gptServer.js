@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from "fs-extra";
 
 export function updateCorrelator(adRequest) {
   // create a new 16 digit correlator
@@ -24,9 +24,27 @@ function getHierarchy(adRequest) {
   }
 }
 
+function createAdsDir() {
+  let dir = (process.env.NODE_ENV === "production") ? "ads" : "dist/ads";
+  // check if directory exists
+  // if not create the directory
+  // if it exists clear directory
+  // for incoming ads
+  if (!fs.existsSync(dir)){
+    console.log("mkdir");
+    fs.mkdirSync(dir);
+  } else {
+    // clear ads directory
+    fs.emptyDirSync(dir);
+  }
+}
+
 export function writeAdRequestFiles(adRequests) {
+  createAdsDir();
   let hierarchy = getHierarchy(adRequests[0]);
-  adRequests.map((request) => {
-    console.log(request[hierarchy]._html_);
+  adRequests.map((request, i) => {
+    //console.log(request[hierarchy]._html_);
+    //Write files to public directory for frontend and phantomjs to use
+    fs.writeFileSync(`dist/ads/ad${i}.html`, request[hierarchy]._html_);
   });
 }
