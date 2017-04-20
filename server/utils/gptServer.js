@@ -25,7 +25,7 @@ function getHierarchy(adRequest) {
 }
 
 function createAdsDir() {
-  let dir = (process.env.NODE_ENV === "production") ? "ads" : "dist/ads";
+  let dir = "./dist/ads";
   // check if directory exists
   // if not create the directory
   // if it exists clear directory
@@ -35,16 +35,19 @@ function createAdsDir() {
     fs.mkdirSync(dir);
   } else {
     // clear ads directory
+    console.log("emptydir");
     fs.emptyDirSync(dir);
   }
 }
 
 export function writeAdRequestFiles(adRequests) {
   createAdsDir();
+  let dir = "./dist/ads";
   let hierarchy = getHierarchy(adRequests[0]);
   adRequests.map((request, i) => {
     //console.log(request[hierarchy]._html_);
     //Write files to public directory for frontend and phantomjs to use
-    fs.writeFileSync(`dist/ads/ad${i}.html`, request[hierarchy]._html_);
+    console.log(`write file ad${i}.html to ${dir}`);
+    fs.writeFileSync(`${dir}/ad${i}.html`, request[hierarchy]._html_);
   });
 }

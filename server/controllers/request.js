@@ -31,7 +31,7 @@ exports.fetchRequests = function(req, res, next) {
         if(adResponses.length === totalRequests) {
           // Responses ready
           // TODO save ads in a directory
-          //writeAdRequestFiles(adResponses)
+          writeAdRequestFiles(adResponses)
           //phantomService(adResponses)
           res.send({ ads: adResponses });
         }
