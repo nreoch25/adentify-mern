@@ -1,5 +1,5 @@
 import phantom from "phantom";
 
-export function phantomService() {
-  console.log("PHANTOM", phantom);
+export function phantomService(filePath) {
+  console.log("PHANTOM", filePath);
 }

@@ -23,8 +23,22 @@ function getHierarchy(adRequest) {
     return hierarchy;
   }
 }
+// create an array of the list of ad request files
+export function getAdRequestFiles() {
+  let AdRequestFileUrlsArray = [];
+  let files = fs.readdirSync("./dist/ads");
+  return files;
+}
+// create a dist directory for dev
+function createDistDirDev() {
+  if (!fs.existsSync("./dist")){
+    console.log("mkdir dist");
+    fs.mkdirSync("./dist");
+  }
+}
 
 function createAdsDir() {
+  if (process.env.NODE_ENV === "development") { createDistDirDev() };
   let dir = "./dist/ads";
   // check if directory exists
   // if not create the directory
@@ -41,6 +55,7 @@ function createAdsDir() {
 }
 
 export function writeAdRequestFiles(adRequests) {
+  //console.log(fs.realpathSync("."));
   createAdsDir();
   let dir = "./dist/ads";
   let hierarchy = getHierarchy(adRequests[0]);

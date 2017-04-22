@@ -1,9 +1,11 @@
 import request from "request";
 import vm from "vm";
-import { updateCorrelator, replaceCorrelator, writeAdRequestFiles } from "../utils/gptServer";
+import { updateCorrelator, replaceCorrelator, writeAdRequestFiles, getAdRequestFiles } from "../utils/gptServer";
 import { phantomService } from "../services/phantomService";
 
 exports.fetchRequests = function(req, res, next) {
+  // TODO find a better way to handle environment URLS
+  const BASE_PATH = "http://localhost:3000/ads/";
   let adRequests = req.body.adRequests
   let adResponses = [];
   let totalRequests = adRequests.length;
@@ -30,9 +32,18 @@ exports.fetchRequests = function(req, res, next) {
         adResponses.push(requestObject);
         if(adResponses.length === totalRequests) {
           // Responses ready
-          // TODO save ads in a directory
+          // write ad request html to files in dist/ads
           writeAdRequestFiles(adResponses)
-          //phantomService(adResponses)
+          // create an array of adFile URLS
+          let adRequestFileUrls = getAdRequestFiles();
+          // map through the array of files
+          adRequestFileUrls.map((file) => {
+            console.log(file);
+            // TODO pass files to phantomService
+            let url = `${BASE_PATH}${file}`
+            phantomService(url);
+          });
+
           res.send({ ads: adResponses });
         }
       }

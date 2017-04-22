@@ -1,5 +1,6 @@
 var webpack = require("webpack");
 var cssnext = require("postcss-cssnext");
+var path = require("path");
 
 module.exports = {
   entry: {
@@ -51,6 +52,9 @@ module.exports = {
         loader: "json-loader"
       }
     ]
+  },
+  devServer: {
+    contentBase: path.join(__dirname, "dist")
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
