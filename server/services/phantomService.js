@@ -4,8 +4,28 @@ import phantom from "phantom";
 
 export function phantomService(filePath) {
   console.log("PHANTOM", filePath);
-  let _ph, _page;
   let time = Date.now();
+  let _ph, _page;
+  phantom.create((ph) => {
+    _ph = ph;
+    ph.createPage((page) => {
+        _page = page;
+        page.open(filePath, (status) => {
+          if(status !== "success") {
+            console.log("FAILED to load the address");
+          } else {
+            time = Date.now() - time;
+            console.log("LOAD TIME", time / 1000);
+            _ph.getCookies((cookies) => {
+              console.log(cookies);
+            });
+            _page.close();
+            _ph.exit();
+          }
+        });
+    });
+  });
+  /*let time = Date.now();
   phantom.create().then(ph => {
     _ph = ph;
     return ph.createPage();
@@ -24,5 +44,5 @@ export function phantomService(filePath) {
     console.log(cookies);
     _page.close();
     _ph.exit();
-  });
+  });*/
 }
