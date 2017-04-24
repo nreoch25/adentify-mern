@@ -3,8 +3,6 @@ import phantom from "phantom";
 // TODO get Network requests
 
 export function phantomService(filePath) {
-  console.log("PHANTOM", filePath);
-  let _ph, _page;
   let time = Date.now();
   phantom.create((ph) => {
     console.log("ph");
