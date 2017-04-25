@@ -4,8 +4,6 @@ import { updateCorrelator, replaceCorrelator, writeAdRequestFiles, getAdRequestF
 import { phantomService } from "../services/phantomService";
 
 exports.fetchRequests = function(req, res, next) {
-  // TODO find a better way to handle environment URLS
-  const BASE_PATH = "http://localhost:3000/ads/";
   let adRequests = req.body.adRequests
   let adResponses = [];
   let totalRequests = adRequests.length;
@@ -38,9 +36,7 @@ exports.fetchRequests = function(req, res, next) {
           let adRequestFileUrls = getAdRequestFiles();
           // map through the array of files
           adRequestFileUrls.map((file) => {
-            console.log(file);
-            // TODO pass files to phantomService
-            let url = `${BASE_PATH}${file}`
+            let url = `./dist/ads/${file}`
             phantomService(url);
           });
 
