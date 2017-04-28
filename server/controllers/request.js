@@ -1,7 +1,7 @@
 import request from "request";
 import vm from "vm";
 import { updateCorrelator, replaceCorrelator, writeAdRequestFiles, getAdRequestFiles } from "../utils/gptServer";
-import { phantomService } from "../services/phantomService";
+import phantomService from "../services/phantomService";
 
 exports.fetchRequests = function(req, res, next) {
   let adRequests = req.body.adRequests
@@ -37,7 +37,8 @@ exports.fetchRequests = function(req, res, next) {
           // map through the array of files
           adRequestFileUrls.map((file) => {
             let url = `./dist/ads/${file}`
-            phantomService(url);
+            let phRequest = new phantomService(url);
+            phRequest.phantomRequest();
           });
 
           res.send({ ads: adResponses });
