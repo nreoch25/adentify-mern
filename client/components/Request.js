@@ -158,7 +158,8 @@ class Request extends Component {
   }
   displayAdResponses() {
     let ads = this.props.ads;
-    console.log("ADS", this.props.ads);
+    let info = this.props.info;
+    console.log("ADS", ads, "INFO", info);
     let displayAds = [];
     // check if any ads in state
     if(typeof ads !== "undefined" && ads.length > 0) {
@@ -241,6 +242,7 @@ class Request extends Component {
 function mapStateToProps(state) {
   return {
     ads : state.gpt.ads,
+    info: state.gpt.info,
     submitted: state.gpt.submitted
   }
 }

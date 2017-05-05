@@ -7,7 +7,7 @@ import { FETCH_AD_RESPONSES, RESET_AD_RESPONSES, SAVE_AD_REQUESTS, SAVE_SUBMITTE
 export function resetAdResponses() {
   return {
     type: RESET_AD_RESPONSES,
-    payload: []
+    payload: { ads: [], info: [] }
   }
 }
 
@@ -56,7 +56,7 @@ export function fetchAdRequests(adRequests) {
     }).then((response) => {
       dispatch({
         type: FETCH_AD_RESPONSES,
-        payload: response.ads
+        payload: { ads: response.ads, info: response.info }
       });
     });
   }
