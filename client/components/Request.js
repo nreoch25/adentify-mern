@@ -6,6 +6,7 @@ import gptRequest from "../utils/gptRequest";
 import gptStorage from "../utils/gptStorage";
 import { fetchAdRequests, resetAdResponses, saveAdRequests, resetSavedResponses } from "../actions/GptActions";
 import DisplayAd from "./DisplayAd";
+import DisplayInfo from "./DisplayInfo";
 
 class Request extends Component {
   constructor(props) {
@@ -24,9 +25,7 @@ class Request extends Component {
     // display request menu on component mounting
     //this.toggleModal();
     let submitted = this.props.submitted;
-    console.log("submitted", submitted);
     if(submitted.length > 0) {
-      console.log("SUBMITTED", submitted);
       this.props.fetchAdRequests(submitted[0].requests);
     }
   }
@@ -112,7 +111,6 @@ class Request extends Component {
     this.props.fetchAdRequests(adRequests);
     // if saveAds is checked store into localStorage
     if(this.saveAds === true) {
-      console.log("REQUEST NAME", this.requestName);
       let curRequest = {};
       curRequest.name = this.requestName;
       curRequest.requests = adRequests;
@@ -159,7 +157,6 @@ class Request extends Component {
   displayAdResponses() {
     let ads = this.props.ads;
     let info = this.props.info;
-    console.log("ADS", ads, "INFO", info);
     let displayAds = [];
     // check if any ads in state
     if(typeof ads !== "undefined" && ads.length > 0) {
@@ -167,6 +164,7 @@ class Request extends Component {
         displayAds.push(
           <div key={i} className="well well-lg adrequest">
             <DisplayAd ad={ad} />
+            <DisplayInfo info={info[i]} />
           </div>
         );
       });

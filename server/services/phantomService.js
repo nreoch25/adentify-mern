@@ -3,8 +3,9 @@ import phantom from "phantom";
 // TODO get Network requests
 
 export default class phantomService {
-  constructor(filePath) {
+  constructor(filePath, adId) {
     this.filePath = filePath;
+    this.adId = adId;
     this.time = Date.now();
     this.phantomAdObject = {};
     this.phantomAdObject.networkRequests = [];
@@ -33,7 +34,10 @@ export default class phantomService {
         return this.ph.cookies();
       }).then(cookies => {
         this.phantomAdObject.cookies = cookies;
+        this.phantomAdObject.adId = this.adId;
         resolve(this.phantomAdObject);
+        this.ph.exit();
+        this.page.close();
       }).catch((error) => {
         reject(error);
       });

@@ -19,6 +19,10 @@ body {
   margin-top: 15px;
 }
 
+.bottom-margin-small {
+  margin-bottom: 25px;
+}
+
 .top-margin-medium {
   margin-top: 30px;
 }

@@ -6,9 +6,13 @@ import phantomService from "../services/phantomService";
 exports.fetchRequests = function(req, res, next) {
   let adRequests = req.body.adRequests;
   console.log(adRequests);
+  // object to pass to phantom
+  // will contain the adResponse and an id;
+  let adRequestObj = {};
+  // response for ads
   let adResponses = [];
+  // response for ad info
   let adInformation = [];
-  let completeAdObject = {};
   let totalRequests = adRequests.length;
   let newCorrelator = updateCorrelator();
   let requestObject;
@@ -40,15 +44,16 @@ exports.fetchRequests = function(req, res, next) {
           let adRequestFileUrls = getAdRequestFiles();
           // map through the array of files
           adRequestFileUrls.map((file, i) => {
+            console.log("FILE", file, "INDEX", i);
             let url = `./dist/ads/${file}`
-            let phRequest = new phantomService(url);
+            // pass the url and index so the ad can be matched with the info
+            let phRequest = new phantomService(url, i);
             phRequest.phantomRequest()
               .then((response) => {
                 // push info response to array
                 adInformation.push(response);
                 // Don't send response until everything is ready
                 if(adInformation.length === totalRequests) {
-                  // TODO match up ads and info
                   res.send({ ads: adResponses, info: adInformation });
                 }
               })
