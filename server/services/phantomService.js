@@ -33,6 +33,9 @@ export default class phantomService {
         this.phantomAdObject.loadTime = this.loadTime;
         return this.ph.cookies();
       }).then(cookies => {
+        // remove the first element of the networkRequests array
+        // it is the request for this ad file
+        this.phantomAdObject.networkRequests.shift();
         this.phantomAdObject.cookies = cookies;
         this.phantomAdObject.adId = this.adId;
         resolve(this.phantomAdObject);

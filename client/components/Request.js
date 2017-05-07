@@ -164,7 +164,7 @@ class Request extends Component {
         displayAds.push(
           <div key={i} className="well well-lg adrequest">
             <DisplayAd ad={ad} />
-            <DisplayInfo info={info[i]} />
+            <DisplayInfo ad={ad} info={info[i]} />
           </div>
         );
       });
