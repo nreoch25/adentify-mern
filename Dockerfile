@@ -11,7 +11,5 @@ COPY yarn.lock /usr/src/app
 RUN yarn install --pure-lockfile
 COPY . /usr/src/app
 
-ENV NODE_ENV production
-
 EXPOSE 3000
 CMD ["npm", "run", "bs"]

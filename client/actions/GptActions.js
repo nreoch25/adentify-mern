@@ -1,7 +1,10 @@
 import fetch from "isomorphic-fetch";
-//const API_URL = "http://staging.adentify.ca/api/request";
-const API_URL = "http://localhost:3000/api/request";
-//const API_URL = "http://localhost/api/request";
+
+let apiURL;
+// store the url for the API
+if(typeof window !== "undefined") {
+  apiURL = `${window.location.origin}/api/request`;
+}
 import { FETCH_AD_RESPONSES, RESET_AD_RESPONSES, SAVE_AD_REQUESTS, SAVE_SUBMITTED_REQUESTS, RESET_SAVED_RESPONSES, UPDATE_SAVED_RESPONSES } from "./types";
 
 export function resetAdResponses() {
@@ -42,7 +45,7 @@ export function saveAdRequests(adRequests) {
 
 export function fetchAdRequests(adRequests) {
   return (dispatch) => {
-    return fetch(API_URL, {
+    return fetch(apiURL, {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json",
