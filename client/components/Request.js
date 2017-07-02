@@ -55,11 +55,14 @@ class Request extends Component {
     let { totalAds } = this.state;
     let adSizes = [];
     for(let i = 0; i < totalAds; i++) {
-      let adSizesRef = `adSizes${i}`
+      let adSizesRef = `adSizes${i}`;
+      let adTargetingRef = `adTargeting${i}`;
       adSizes.push(
         <fieldset key={i} className="form-group">
           <label>Ad Sizes: Excepts multiple sizes</label>
           <input  ref={adSizesRef} className="form-control" placeholder="example. 728x90, 300x250, (1x1 for outofpage)" required />
+          <label className="top-margin-xsmall">Key-value Targeting:</label>
+          <input ref={adTargetingRef} className="form-control" placeholder="example. pos=1,type=bigbox,interest=sports" required />
         </fieldset>
       );
     }
