@@ -62,7 +62,7 @@ class Request extends Component {
           <label>Ad Sizes: Excepts multiple sizes</label>
           <input  ref={adSizesRef} className="form-control" placeholder="example. 728x90, 300x250, (1x1 for outofpage)" required />
           <label className="top-margin-xsmall">Key-value Targeting:</label>
-          <input ref={adTargetingRef} className="form-control" placeholder="example. pos=1,type=bigbox,interest=sports" required />
+          <input ref={adTargetingRef} className="form-control" placeholder="example. pos=1,type=bigbox,interest=sports" />
         </fieldset>
       );
     }
@@ -101,6 +101,18 @@ class Request extends Component {
     }
     return adSizesArray;
   }
+  getTargeting() {
+    // check if the first value is an empty string and return null
+    if(this.refs.adTargeting0.value === "") { return null; }
+    // create targeting Array based on totalAds.value
+    let totalAds = this.refs.totalAds.value;
+    let adTargetingArray = [];
+    for(let i = 0; i < totalAds; i++) {
+      let curRef = `adTargeting${i}`;
+      adTargetingArray.push(this.refs[curRef].value);
+    }
+    return adTargetingArray;
+  }
   resetAdRequests() {
     // reset ad Responses on new form request
     this.props.resetAdResponses();
@@ -130,6 +142,7 @@ class Request extends Component {
       this.removeAds();
     }
     let adSizes = this.getAdSizes();
+    let targeting = this.getTargeting();
 
     // TODO set target keyvalues
 
@@ -138,6 +151,7 @@ class Request extends Component {
       adUnits: this.refs.adUnits.value,
       totalAds: this.refs.totalAds.value,
       adSizes: adSizes,
+      targeting: targeting,
       reference: this.refs.adDisplay
     };
 

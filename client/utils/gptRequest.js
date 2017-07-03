@@ -85,6 +85,15 @@ class gptRequest {
     });
     return finalAdSizesArray;
   }
+  static getAdTargeting(targeting) {
+    // remove spaces
+    let targetingString = targeting.replace(" ", "");
+    // split at ,
+    let targetingArray = targetingString.split(",");
+    // split at =
+    targetingArray = targetingArray.map(target => target.split("="));
+    return targetingArray;
+  }
   static removeAds() {
     // destroy gpt slots
     this.win.googletag.destroySlots();
@@ -111,14 +120,14 @@ class gptRequest {
     let networkID = gptObject.networkID;
     let adUnits = gptObject.adUnits;
     let adSizes = gptObject.adSizes;
+    let targeting = gptObject.targeting;
     let totalAds = gptObject.totalAds;
     let saveAds = gptObject.saved;
+
     // get the finalAdSizesArray array
     let finalAdSizesArray = this.getAdSizes(adSizes, totalAds);
     // construct the ad hierarchy
     this.hierarchy = `/${networkID}/${adUnits}`;
-
-    //TODO set targeting for all ads
 
     for(let i = 0; i < finalAdSizesArray.length; i++) {
       let adSizeArray = finalAdSizesArray[i];
@@ -130,6 +139,16 @@ class gptRequest {
       } else {
         slot = this.win.googletag.defineSlot(this.hierarchy, adSizeArray, this.adDivs[i])
           .addService(this.win.googletag.pubads());
+      }
+
+      if(targeting !== null) {
+        let AdTargetingArray = this.getAdTargeting(targeting[i]);
+        AdTargetingArray.forEach((targeting) => {
+          console.log("TARGETING", targeting);
+          slot.setTargeting(targeting[0], targeting[1]);
+        });
+      } else {
+        console.log("NO TARGETING");
       }
 
       // display ad
