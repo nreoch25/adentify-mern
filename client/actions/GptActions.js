@@ -61,6 +61,8 @@ export function fetchAdRequests(adRequests) {
         type: FETCH_AD_RESPONSES,
         payload: { ads: response.ads, info: response.info }
       });
+    }).catch((error) => {
+      console.log("HERE", error);
     });
   }
 }

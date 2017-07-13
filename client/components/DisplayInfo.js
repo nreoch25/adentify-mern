@@ -14,12 +14,15 @@ class DisplayInfo extends Component {
     }
   }
   getAdInformation() {
-    // deconstruct infoObject
+    // destructure infoObject
     let { cookies, loadTime, networkRequests } = this.props.info;
     let hierarchyRoot = this.getHierarchyRoot();
-    let { _width_, _height_, _campaign_ids_, _adgroup2_ids_, _creative_ids_ } = this.props.ad[hierarchyRoot];
+    // destructure ad response object
+    let { _width_, _height_, _campaign_ids_, _adgroup2_ids_, _creative_ids_, _empty_ } = this.props.ad[hierarchyRoot];
     let cookiesArray = [];
     let networkRequestsArray = [];
+    // check if ad response is empty and return null
+    if(_empty_ === true) { return null; }
     cookies.map((cookie, i) => {
       cookiesArray.push(
         <ul className="list-group" key={i}>
