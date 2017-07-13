@@ -87,7 +87,7 @@ class gptRequest {
   }
   static getAdTargeting(targeting) {
     // remove spaces
-    let targetingString = targeting.replace(" ", "");
+    let targetingString = targeting.replace(/ /g, "");
     // split at ,
     let targetingArray = targetingString.split(",");
     // split at =
