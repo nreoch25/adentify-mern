@@ -5,7 +5,14 @@ let apiURL;
 if(typeof window !== "undefined") {
   apiURL = `${window.location.origin}/api/request`;
 }
-import { FETCH_AD_RESPONSES, RESET_AD_RESPONSES, SAVE_AD_REQUESTS, SAVE_SUBMITTED_REQUESTS, RESET_SAVED_RESPONSES, UPDATE_SAVED_RESPONSES } from "./types";
+import { FETCH_AD_RESPONSES, RESET_AD_RESPONSES, SAVE_AD_REQUESTS, SAVE_SUBMITTED_REQUESTS, RESET_SAVED_RESPONSES, UPDATE_SAVED_RESPONSES, SET_SUBMIT_ERRORS } from "./types";
+
+export function setSubmitErrors(errors) {
+  return {
+    type: SET_SUBMIT_ERRORS,
+    payload: errors
+  }
+}
 
 export function resetAdResponses() {
   return {

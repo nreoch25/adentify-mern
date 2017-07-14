@@ -3,8 +3,9 @@ import Logo from "./global/Logo";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import gptRequest from "../utils/gptRequest";
+import requestValidation from "../utils/requestValidation";
 import gptStorage from "../utils/gptStorage";
-import { fetchAdRequests, resetAdResponses, saveAdRequests, resetSavedResponses } from "../actions/GptActions";
+import { fetchAdRequests, resetAdResponses, saveAdRequests, resetSavedResponses, setSubmitErrors } from "../actions/GptActions";
 import DisplayAd from "./DisplayAd";
 import DisplayInfo from "./DisplayInfo";
 
@@ -162,7 +163,16 @@ class Request extends Component {
       this.adHierarchy = `/${gptObject.networkID}/${gptObject.adUnits}`;
     }
 
-    // TODO check if form is valid
+    // check if form values are valid
+    // form validation error will be stored using redux
+    let validationErrors = requestValidation.init(gptObject);
+    console.log("VALIDATION ERRORS", validationErrors);
+    // return if validationErrors
+    if(validationErrors.length > 0) {
+      console.log("ERRORS SUBMITTED", validationErrors);
+      this.props.setSubmitErrors(validationErrors)
+      return;
+    }
 
     gptRequest.gptElements(gptObject);
     gptRequest.adRequests(gptObject, this);
@@ -191,6 +201,19 @@ class Request extends Component {
   displayModal() {
     this.toggleModal();
   }
+  displayErrors() {
+    console.log("Submit Errors", this.props.submitErrors);
+    if(this.props.submitErrors.length === 0) { return }
+    let submitErrors = [];
+    this.props.submitErrors.map((error, i) => {
+      submitErrors.push(<li key={i}>{error}</li>);
+    });
+    return (
+      <ul>
+        {submitErrors}
+      </ul>
+    );
+  }
   render() {
     return (
       <div>
@@ -211,6 +234,7 @@ class Request extends Component {
                 <h4 className="modal-title">Make an Ad Request</h4>
               </div>
               <div className="modal-body">
+                { this.displayErrors() }
                 <form onSubmit={this.adRequest}>
                   <fieldset className="form-group">
                     <label>Network ID:</label>
@@ -258,8 +282,9 @@ function mapStateToProps(state) {
   return {
     ads : state.gpt.ads,
     info: state.gpt.info,
-    submitted: state.gpt.submitted
+    submitted: state.gpt.submitted,
+    submitErrors: state.gpt.submitErrors
   }
 }
 
-export default connect(mapStateToProps, { fetchAdRequests, resetAdResponses, saveAdRequests, resetSavedResponses })(Request);
+export default connect(mapStateToProps, { fetchAdRequests, resetAdResponses, saveAdRequests, resetSavedResponses, setSubmitErrors })(Request);

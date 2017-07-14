@@ -1,5 +1,5 @@
-import { FETCH_AD_RESPONSES, RESET_AD_RESPONSES, SAVE_AD_REQUESTS, SAVE_SUBMITTED_REQUESTS, RESET_SAVED_RESPONSES, UPDATE_SAVED_RESPONSES } from "../actions/types";
-const initialState = { ads: [], info: [], saved: [], submitted: [] };
+import { FETCH_AD_RESPONSES, RESET_AD_RESPONSES, SAVE_AD_REQUESTS, SAVE_SUBMITTED_REQUESTS, RESET_SAVED_RESPONSES, UPDATE_SAVED_RESPONSES, SET_SUBMIT_ERRORS } from "../actions/types";
+const initialState = { ads: [], info: [], saved: [], submitted: [], submitErrors: [] };
 
 export default function(state = initialState, action) {
   console.log(action.type);
@@ -21,6 +21,9 @@ export default function(state = initialState, action) {
       break;
     case UPDATE_SAVED_RESPONSES:
       return { ...state, saved: action.payload }
+      break;
+    case SET_SUBMIT_ERRORS:
+      return { ...state, submitErrors: action.payload }
       break;
   }
   return state;
