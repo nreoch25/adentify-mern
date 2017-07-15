@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 import gptRequest from "../utils/gptRequest";
 import requestValidation from "../utils/requestValidation";
 import gptStorage from "../utils/gptStorage";
-import { fetchAdRequests, resetAdResponses, saveAdRequests, resetSavedResponses, setSubmitErrors } from "../actions/GptActions";
+import { fetchAdRequests, resetAdResponses, saveAdRequests, resetSavedResponses, setSubmitErrors, resetSubmitErrors } from "../actions/GptActions";
 import DisplayAd from "./DisplayAd";
 import DisplayInfo from "./DisplayInfo";
 
@@ -138,6 +138,9 @@ class Request extends Component {
   }
   adRequest(evt) {
     evt.preventDefault();
+    // Reset submit errors
+    console.log("RESET SUBMIT ERRORS HERE");
+    this.props.resetSubmitErrors();
     //remove old ads if they exist
     if(this.props.ads.length > 0 || this.props.submitted.length > 0) {
       this.removeAds();
@@ -287,4 +290,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { fetchAdRequests, resetAdResponses, saveAdRequests, resetSavedResponses, setSubmitErrors })(Request);
+export default connect(mapStateToProps, { fetchAdRequests, resetAdResponses, saveAdRequests, resetSavedResponses, setSubmitErrors, resetSubmitErrors })(Request);
