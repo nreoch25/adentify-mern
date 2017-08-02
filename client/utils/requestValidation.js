@@ -1,18 +1,27 @@
 class requestValidation {
   static checkNetworkID(networkID) {
     let pattern = /^\d{4,5}$/g;
-    if(pattern.test(networkID) === false) {
+    if (pattern.test(networkID) === false) {
       this.validationErrors.push("Invalid GPT Network ID");
     }
   }
+  static checkAdSizes(adSize) {
+    let pattern = /^\d+x\d+/g;
+    if (pattern.test(adSize) === false) {
+      this.validationErrors.push(`Invalid Ad Size - ${adSize}`);
+    }
+  }
   static init(gptObject) {
-    console.log("GPT OBJECT VALIDATION", gptObject)
+    console.log("GPT OBJECT VALIDATION", gptObject);
     this.validationErrors = [];
-    // Test when error is returned
+    // Check for valid networkID
     this.checkNetworkID(gptObject.networkID);
-    /*if(gptObject.networkID !== "5876") {
-      this.validationErrors.push("Incorrect NetworkID used");
-    }*/
+    // Check for valid ad sizes
+    gptObject.adSizes.forEach(size => {
+      this.checkAdSizes(size);
+    });
+    // TODO validate hierarchy
+    // TODO validate keyvalue targeting
     return this.validationErrors;
   }
 }
