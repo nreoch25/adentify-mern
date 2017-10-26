@@ -18,9 +18,4 @@ class App extends Component {
   }
 }
 
-App.need = [
-  () => { return fetchPosts(); },
-  () => { return fetchPhotos(); }
-];
-
 export default App;

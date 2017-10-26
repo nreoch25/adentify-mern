@@ -20,8 +20,6 @@ class requestValidation {
     gptObject.adSizes.forEach(size => {
       this.checkAdSizes(size);
     });
-    // TODO validate hierarchy
-    // TODO validate keyvalue targeting
     return this.validationErrors;
   }
 }
