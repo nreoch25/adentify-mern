@@ -14,7 +14,7 @@ class About extends Component {
           </div>
           <div className="panel-body">
             <p>
-              Adentify is an online advertising adtag debugging tool for web
+              Adentify is an online advertising ad-tag debugging tool for web
               publishers leveraging the GPT ad tagging library and DFP. Our app
               will allow publishers to see what's really going on behind the
               scenes of their ad calls. We have extensive experience in the
